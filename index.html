@@ -148,10 +148,10 @@
   .fgrid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;align-items:center;
     border-top:1px solid var(--line);padding-top:24px}
   /* hide Google Translate chrome but KEEP the translator working */
-  .goog-te-banner-frame{display:none!important}
+  .goog-te-banner-frame, iframe.skiptranslate{display:none!important;visibility:hidden!important;height:0!important}
   .goog-te-gadget{height:0!important;overflow:hidden!important;font-size:0!important}
   .goog-tooltip,.goog-te-balloon-frame,#goog-gt-tt{display:none!important}
-  body{top:0!important}
+  body{top:0!important;position:static!important}
   #google_translate_element{position:fixed;left:-9999px;top:0}
   font[style]{background:transparent!important;box-shadow:none!important}
 </style>
@@ -449,10 +449,9 @@
 
   // keep Google's translate top-banner hidden (it can reappear after each switch)
   setInterval(function(){
-    var b=document.querySelector('.goog-te-banner-frame');
-    if(b){ b.style.display='none'; }
+    document.querySelectorAll('.goog-te-banner-frame, iframe.skiptranslate').forEach(function(b){ b.style.display='none'; });
     if(document.body && document.body.style.top!=='0px'){ document.body.style.top='0px'; }
-  },400);
+  },300);
 </script>
 
 <!-- Google Translate (translates the page in place into the chosen language) -->
