@@ -403,7 +403,16 @@
     if(!lang || SUPPORTED.indexOf(lang)<0) lang='en';
     var pill=document.querySelector('.lpill[data-l="'+lang+'"]');
     if(pill){document.querySelectorAll('.lpill').forEach(function(x){x.classList.remove('on');});pill.classList.add('on');}
-    if(lang==='et') return;           // page source is Estonian
+    if(lang==='et'){                  // page source is Estonian -> restore original
+      if(document.cookie.indexOf('googtrans=')>-1 && !/googtrans=\/et\/et/.test(document.cookie)){
+        var ex='=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
+        document.cookie='googtrans'+ex;
+        document.cookie='googtrans'+ex+';domain='+location.hostname;
+        document.cookie='googtrans'+ex+';domain=.'+location.hostname;
+        location.reload();
+      }
+      return;
+    }
     (function setC(n){
       var c=document.querySelector('.goog-te-combo');
       if(c){c.value=lang;c.dispatchEvent(new Event('change'));}
