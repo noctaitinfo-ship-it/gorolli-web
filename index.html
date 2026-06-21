@@ -162,7 +162,7 @@
         <circle cx="29" cy="43" r="13.5" fill="#FDC51A"/>
         <circle cx="29" cy="43" r="5" fill="#0A1F3D"/>
       </svg>
-      <span class="wm">GoRolli</span>
+      <span class="wm notranslate" translate="no">GoRolli</span>
     </a>
   </nav></div>
 </header>
@@ -315,7 +315,7 @@
 <footer>
   <div class="wrap">
     <div class="langwrap">
-      <div class="langbar" id="langbar">
+      <div class="langbar notranslate" id="langbar" translate="no">
         <span class="lpill on" data-l="en">EN</span>
         <span class="lpill" data-l="et">EE</span>
         <span class="lpill" data-l="fi">FI</span>
@@ -357,7 +357,7 @@
           <circle cx="29" cy="43" r="13.5" fill="#FDC51A"/>
           <circle cx="29" cy="43" r="5" fill="#0A1F3D"/>
         </svg>
-        <span class="wm" style="font-size:18px">GoRolli</span>
+        <span class="wm notranslate" translate="no" style="font-size:18px">GoRolli</span>
       </div>
       <div>&copy; 2026 GoRolli &middot; Teenusetingimused &middot; Privaatsus</div>
     </div>
@@ -390,21 +390,49 @@
     setTimeout(function(){setInterval(step,3400);}, idx*1700);
   });
 
+  var SUPPORTED=['en','et','fi','lv','lt','de','pl','ru','sv','no','da','nl','fr','es','it','pt','cs','sk','hu','ro','bg','hr','sl','el','uk','tr','is','ga','mt','sq','sr','mk'];
+  // country -> language (only for supported languages; everything else falls back to English)
+  var C2L={EE:'et',FI:'fi',LV:'lv',LT:'lt',DE:'de',AT:'de',CH:'de',LI:'de',PL:'pl',
+    RU:'ru',BY:'ru',KZ:'ru',KG:'ru',SE:'sv',NO:'no',DK:'da',NL:'nl',BE:'nl',
+    FR:'fr',LU:'fr',MC:'fr',ES:'es',MX:'es',AR:'es',CO:'es',CL:'es',PE:'es',VE:'es',
+    IT:'it',SM:'it',PT:'pt',BR:'pt',AO:'pt',MZ:'pt',CZ:'cs',SK:'sk',HU:'hu',
+    RO:'ro',MD:'ro',BG:'bg',HR:'hr',SI:'sl',GR:'el',CY:'el',UA:'uk',TR:'tr',
+    IS:'is',MT:'mt',AL:'sq',XK:'sq',RS:'sr',ME:'sr',MK:'mk'};
+
+  function grApply(lang){
+    if(!lang || SUPPORTED.indexOf(lang)<0) lang='en';
+    var pill=document.querySelector('.lpill[data-l="'+lang+'"]');
+    if(pill){document.querySelectorAll('.lpill').forEach(function(x){x.classList.remove('on');});pill.classList.add('on');}
+    if(lang==='et') return;           // page source is Estonian
+    (function setC(n){
+      var c=document.querySelector('.goog-te-combo');
+      if(c){c.value=lang;c.dispatchEvent(new Event('change'));}
+      else if(n<40){setTimeout(function(){setC(n+1);},250);}
+    })(0);
+  }
+
+  // manual choice (remembered)
   var lb=document.getElementById('langbar');
   if(lb){
     lb.querySelectorAll('.lpill').forEach(function(p){
       p.addEventListener('click',function(){
-        lb.querySelectorAll('.lpill').forEach(function(x){x.classList.remove('on');});
-        p.classList.add('on');
-        var lang=p.dataset.l;
-        (function setLang(n){
-          var c=document.querySelector('.goog-te-combo');
-          if(c){c.value=lang;c.dispatchEvent(new Event('change'));}
-          else if(n<25){setTimeout(function(){setLang(n+1);},250);}
-        })(0);
+        try{localStorage.setItem('gr_lang',p.dataset.l);}catch(e){}
+        grApply(p.dataset.l);
       });
     });
   }
+
+  // auto-detect: saved choice -> country (GeoIP) -> browser language -> English
+  (function(){
+    var saved=null; try{saved=localStorage.getItem('gr_lang');}catch(e){}
+    if(saved){grApply(saved);return;}
+    function browserLang(){var n=(navigator.languages&&navigator.languages[0])||navigator.language||'en';return n.slice(0,2).toLowerCase();}
+    fetch('https://ipapi.co/json/').then(function(r){return r.json();}).then(function(d){
+      var cc=(d&&d.country_code)?d.country_code.toUpperCase():'';
+      var lang=C2L[cc] || browserLang();
+      grApply(lang);
+    }).catch(function(){ grApply(browserLang()); });
+  })();
 </script>
 
 <!-- Google Translate (translates the page in place into the chosen language) -->
