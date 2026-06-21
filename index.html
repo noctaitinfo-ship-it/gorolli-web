@@ -399,46 +399,48 @@
     RO:'ro',MD:'ro',BG:'bg',HR:'hr',SI:'sl',GR:'el',CY:'el',UA:'uk',TR:'tr',
     IS:'is',MT:'mt',AL:'sq',XK:'sq',RS:'sr',ME:'sr',MK:'mk'};
 
-  function grCookie(lang){
+  function grHi(lang){var p=document.querySelector('.lpill[data-l="'+lang+'"]');if(p){document.querySelectorAll('.lpill').forEach(function(x){x.classList.remove('on');});p.classList.add('on');}}
+  // translate in place via Google combo (NO page reload -> can never loop)
+  function grCombo(lang,n){
+    var c=document.querySelector('.goog-te-combo');
+    if(c){ c.value=lang; c.dispatchEvent(new Event('change')); }
+    else if((n||0)<60){ setTimeout(function(){grCombo(lang,(n||0)+1);},200); }
+  }
+  function grRestore(){ // back to original Estonian WITHOUT reload (mobile-safe)
+    var base=location.hostname.replace(/^www\./,'');
     var del='googtrans=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
     document.cookie=del;
     document.cookie=del+';domain='+location.hostname;
-    document.cookie=del+';domain=.'+location.hostname;
-    if(lang && lang!=='et'){
-      document.cookie='googtrans=/et/'+lang+';path=/';
-      document.cookie='googtrans=/et/'+lang+';path=/;domain=.'+location.hostname;
-    }
+    document.cookie=del+';domain=.'+base;
+    var c=document.querySelector('.goog-te-combo');
+    if(c){ c.value=''; c.dispatchEvent(new Event('change')); }
   }
-  function grCur(){var m=document.cookie.match(/googtrans=\/[^\/]+\/([^;]+)/);return m?m[1]:null;}
-  function grHi(lang){var p=document.querySelector('.lpill[data-l="'+lang+'"]');if(p){document.querySelectorAll('.lpill').forEach(function(x){x.classList.remove('on');});p.classList.add('on');}}
-
-  // manual choice: set cookie + reload once (Google applies on load)
+  function grSet(lang){
+    if(SUPPORTED.indexOf(lang)<0) lang='en';
+    grHi(lang);
+    if(lang==='et'){ grRestore(); return; }
+    grCombo(lang,0);
+  }
+  // manual choice (remembered)
   var lb=document.getElementById('langbar');
   if(lb){
     lb.querySelectorAll('.lpill').forEach(function(p){
       p.addEventListener('click',function(){
-        var lang=p.dataset.l; if(SUPPORTED.indexOf(lang)<0)lang='en';
-        try{localStorage.setItem('gr_lang',lang);}catch(e){}
-        grCookie(lang); location.reload();
+        try{localStorage.setItem('gr_lang',p.dataset.l);}catch(e){}
+        grSet(p.dataset.l);
       });
     });
   }
-
-  // apply on load (loop-safe: reload ONLY when current cookie differs from desired)
-  function grApplyLoad(target){
-    if(SUPPORTED.indexOf(target)<0) target='en';
-    grHi(target);
-    var desired=(target==='et')?null:target;
-    if(grCur()!==desired){ grCookie(target); location.reload(); }
-  }
+  // auto on load (NO reload): saved -> country -> browser -> English
   (function(){
+    function go(lang){ if(SUPPORTED.indexOf(lang)<0) lang='en'; grHi(lang); if(lang!=='et') grCombo(lang,0); }
     var saved=null; try{saved=localStorage.getItem('gr_lang');}catch(e){}
-    if(saved){ grApplyLoad(saved); return; }
+    if(saved){ go(saved); return; }
     function bl(){var n=(navigator.languages&&navigator.languages[0])||navigator.language||'en';return n.slice(0,2).toLowerCase();}
     fetch('https://ipapi.co/json/').then(function(r){return r.json();}).then(function(d){
       var cc=(d&&d.country_code)?d.country_code.toUpperCase():'';
-      grApplyLoad(C2L[cc]||bl());
-    }).catch(function(){ grApplyLoad(bl()); });
+      go(C2L[cc]||bl());
+    }).catch(function(){ go(bl()); });
   })();
 </script>
 
