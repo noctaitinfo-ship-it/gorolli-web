@@ -446,6 +446,13 @@
       go(C2L[cc]||bl());
     }).catch(function(){ go(bl()); });
   })();
+
+  // keep Google's translate top-banner hidden (it can reappear after each switch)
+  setInterval(function(){
+    var b=document.querySelector('.goog-te-banner-frame');
+    if(b){ b.style.display='none'; }
+    if(document.body && document.body.style.top!=='0px'){ document.body.style.top='0px'; }
+  },400);
 </script>
 
 <!-- Google Translate (translates the page in place into the chosen language) -->
