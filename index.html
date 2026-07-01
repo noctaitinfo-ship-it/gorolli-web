@@ -403,14 +403,15 @@
     setTimeout(function(){setInterval(step,3400);}, idx*1700);
   });
 
-  var SUPPORTED=['en','et','fi','lv','lt','de','pl','ru','sv','no','da','nl','fr','es','it','pt','cs','sk','hu','ro','bg','hr','sl','el','uk','tr','is','ga','mt','sq','sr','mk'];
+  var SUPPORTED=['en','et','de','pl','lv','fi','lt','ru','sv','da','uk','es','fr','it','nl','pt','cs','sk','hu','ro','bg','tr','el','hr','sl','sr','ar','he','hi','zh','ja','ko'];
   // country -> language (only for supported languages; everything else falls back to English)
   var C2L={EE:'et',FI:'fi',LV:'lv',LT:'lt',DE:'de',AT:'de',CH:'de',LI:'de',PL:'pl',
-    RU:'ru',BY:'ru',KZ:'ru',KG:'ru',SE:'sv',NO:'no',DK:'da',NL:'nl',BE:'nl',
+    RU:'ru',BY:'ru',KZ:'ru',KG:'ru',SE:'sv',DK:'da',NL:'nl',BE:'fr',
     FR:'fr',LU:'fr',MC:'fr',ES:'es',MX:'es',AR:'es',CO:'es',CL:'es',PE:'es',VE:'es',
     IT:'it',SM:'it',PT:'pt',BR:'pt',AO:'pt',MZ:'pt',CZ:'cs',SK:'sk',HU:'hu',
     RO:'ro',MD:'ro',BG:'bg',HR:'hr',SI:'sl',GR:'el',CY:'el',UA:'uk',TR:'tr',
-    IS:'is',MT:'mt',AL:'sq',XK:'sq',RS:'sr',ME:'sr',MK:'mk'};
+    RS:'sr',BA:'sr',ME:'sr',IL:'he',IN:'hi',CN:'zh',HK:'zh',TW:'zh',SG:'zh',
+    JP:'ja',KR:'ko',SA:'ar',AE:'ar',EG:'ar',MA:'ar'};
 
   function grHi(lang){var p=document.querySelector('.lpill[data-l="'+lang+'"]');if(p){document.querySelectorAll('.lpill').forEach(function(x){x.classList.remove('on');});p.classList.add('on');}}
   // translate in place via Google combo (NO page reload -> can never loop)
@@ -428,9 +429,14 @@
     var c=document.querySelector('.goog-te-combo');
     if(c){ c.value=''; c.dispatchEvent(new Event('change',{bubbles:true})); }
   }
+  function grAppLinks(lang){
+    document.querySelectorAll('a[href^="https://client.gorolli.com"]').forEach(function(a){a.href='https://client.gorolli.com?lang='+lang;});
+    document.querySelectorAll('a[href^="https://host.gorolli.com"]').forEach(function(a){a.href='https://host.gorolli.com?lang='+lang;});
+  }
   function grSet(lang){
     if(SUPPORTED.indexOf(lang)<0) lang='en';
     grHi(lang);
+    grAppLinks(lang);
     if(lang==='et'){ grRestore(); return; }
     grCombo(lang,0);
   }
@@ -446,7 +452,7 @@
   }
   // auto on load (NO reload): saved -> country -> browser -> English
   (function(){
-    function go(lang){ if(SUPPORTED.indexOf(lang)<0) lang='en'; grHi(lang); if(lang!=='et') grCombo(lang,0); }
+    function go(lang){ if(SUPPORTED.indexOf(lang)<0) lang='en'; grHi(lang); grAppLinks(lang); if(lang!=='et') grCombo(lang,0); }
     var saved=null; try{saved=localStorage.getItem('gr_lang');}catch(e){}
     if(saved){ go(saved); return; }
     function bl(){var n=(navigator.languages&&navigator.languages[0])||navigator.language||'en';return n.slice(0,2).toLowerCase();}
