@@ -415,9 +415,14 @@
 
   function grHi(lang){var p=document.querySelector('.lpill[data-l="'+lang+'"]');if(p){document.querySelectorAll('.lpill').forEach(function(x){x.classList.remove('on');});p.classList.add('on');}}
   // translate in place via Google combo (NO page reload -> can never loop)
+  function grTranslateCode(lang){
+    if(lang==='he') return 'iw';
+    if(lang==='zh') return 'zh-CN';
+    return lang;
+  }
   function grCombo(lang,n){
     var c=document.querySelector('.goog-te-combo');
-    if(c){ c.value=lang; c.dispatchEvent(new Event('change',{bubbles:true})); }
+    if(c){ c.value=grTranslateCode(lang); c.dispatchEvent(new Event('change',{bubbles:true})); }
     else if((n||0)<80){ setTimeout(function(){grCombo(lang,(n||0)+1);},200); }
   }
   function grRestore(){ // back to original Estonian WITHOUT reload (mobile-safe)
