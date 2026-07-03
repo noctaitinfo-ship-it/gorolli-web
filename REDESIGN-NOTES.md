@@ -212,9 +212,7 @@ Principle confirmed in code: **homepage = trailer finder, client web = real sear
 - Flag-gated URL contract updated (all behind `live_map:false`, nothing fires today): GPS granted → full search carries `&lat=…&lng=…` (3 decimals, coarse); GPS denied → manual city input → `&city=…` (was `&q=`); API down → straight to client web.
 
 ## F2 · Client web (FlutterFlow) requirements — outside this repo
-1. Add a public map/search page reachable without login (the "/find" target), then flip `GR_FIND_PATH`.
-2. Read page parameters: `lang` (already honored), `city`, `lat`, `lng` — center the map / prefill the search from them.
-3. Fix FlutterFlow web metadata: the client web currently serves title "GoRolli2", description "Built with FlutterFlow", a FlutterFlow OG splash image, and `noindex`. Renters arriving from the homepage see "GoRolli2" in the tab. Set real title/description/OG in FlutterFlow app settings. Keep or reconsider `noindex` deliberately.
+Full build spec with FlutterFlow click-paths, metadata table, homepage-flip checklist and test plan: **`client-web-find-requirements.md`** (repo root). Summary: public no-login `/find` page with `lang/city/lat/lng` params, login only at booking, approximate locations until booking, metadata de-FlutterFlow-ed (title "GoRolli — leia haagis lähedalt", noindex off for /find).
 
 ## F3 · App-as-retention framing (copy added)
 Line under "Two apps" heading on index (ET, GT translates the rest) and all 7 static pages (localized), also added to `i18n/finder-strings.json` as `app_retention` (44th key, all 32 languages): *"Use GoRolli often? The app is faster next time — the browser works right away."* No behavior change; store badges stay where they were (below the fold, after search intent).
