@@ -97,7 +97,7 @@ a:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
 .preview.live .livemap{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:2}
 .preview.live .ldg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--navy);z-index:1}
 .preview.live .openfull{position:absolute;right:10px;top:10px;background:rgba(10,31,61,.92);color:#fff;padding:9px 14px;border-radius:999px;font-size:12px;font-weight:700;z-index:3}
-@media(min-width:721px){.preview.live{height:clamp(560px,72vh,760px)}}
+@media(min-width:721px){.preview.live{height:clamp(620px,78vh,900px)}}
 </style>
 </head>
 <body>
@@ -171,39 +171,42 @@ a:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
 </div></main>
 <footer><div class="wrap">© 2026 GoRolli · <a href="/terms">Noteikumi</a> · <a href="/privacy">Privātums</a></div></footer>
 <script>
-/* AKTĪVĀ KLIENTA KARTE (2026-07-03): CTA atver ĪSTO /find karti šajā lapā.
-   Bez JS CTA paliek parasta /find saite (nemainīta uzvedība). */
+/* AKTĪVĀ KLIENTA KARTE v2 (2026-07-03): desktops atver ĪSTO /find karti UZREIZ
+   (bez geo vaicājuma). Mobilais: CTA tieši uz /find; bez JS -> parasta saite. */
 (function(){
   var cta=document.querySelector('a.go'); var pv=document.querySelector('.preview');
   if(!cta||!pv) return;
   var LANG='lv', LOADING='Atver tiešraides karti…', OPENFULL='Atvērt pilno meklēšanu', FALLBACK='Atvērt GoRolli meklēšanu';
-  var opened=false;
-  cta.addEventListener('click',function(e){
-    if(window.matchMedia('(max-width: 767px)').matches) return; /* MOBILAIS: tieši /find, bez iframe */
-    if(opened) return;
-    e.preventDefault(); opened=true;
+  var frame=null, geoQs='', busy=false;
+  function findUrl(){ return 'https://client.gorolli.com/find?lang='+LANG+geoQs; }
+  function reveal(){
+    if(frame) return;
     pv.classList.add('live');
     pv.innerHTML='<div class="ldg">'+LOADING+'</div>';
-    function show(url){
-      var f=document.createElement('iframe');
-      f.className='livemap'; f.title='GoRolli'; f.allow='geolocation'; f.src=url;
-      var ldg=pv.querySelector('.ldg');
-      var failT=setTimeout(function(){ if(ldg) ldg.innerHTML='<a class="go" style="max-width:320px;padding:0 18px" href="'+url+'">'+FALLBACK+'</a>'; },9000);
-      f.onload=function(){ clearTimeout(failT); if(ldg){ ldg.remove(); ldg=null; } };
-      pv.appendChild(f);
-      var a=document.createElement('a');
-      a.className='openfull'; a.href='https://client.gorolli.com/find?lang='+LANG;
-      a.target='_blank'; a.rel='noopener'; a.textContent=OPENFULL;
-      pv.appendChild(a);
-    }
-    var base='https://client.gorolli.com/find?lang='+LANG;
-    if(navigator.geolocation){
-      navigator.geolocation.getCurrentPosition(
-        function(p){ show(base+'&lat='+p.coords.latitude.toFixed(3)+'&lng='+p.coords.longitude.toFixed(3)); },
-        function(){ show(base); },
-        {timeout:6000, maximumAge:600000});
-    } else { show(base); }
+    var url=findUrl();
+    frame=document.createElement('iframe');
+    frame.className='livemap'; frame.title='GoRolli'; frame.allow='geolocation'; frame.src=url;
+    var ldg=pv.querySelector('.ldg');
+    var failT=setTimeout(function(){ if(ldg) ldg.innerHTML='<a class="go" style="max-width:320px;padding:0 18px" href="'+url+'">'+FALLBACK+'</a>'; },9000);
+    frame.onload=function(){ clearTimeout(failT); if(ldg){ ldg.remove(); ldg=null; } };
+    pv.appendChild(frame);
+    var a=document.createElement('a');
+    a.className='openfull'; a.href='https://client.gorolli.com/find?lang='+LANG;
+    a.target='_blank'; a.rel='noopener'; a.textContent=OPENFULL;
+    pv.appendChild(a);
+  }
+  cta.addEventListener('click',function(e){
+    if(window.matchMedia('(max-width: 767px)').matches) return; /* MOBILAIS: tieši /find, bez iframe */
+    e.preventDefault();
+    if(!frame){ reveal(); return; }
+    if(busy || !navigator.geolocation) return;
+    busy=true;
+    navigator.geolocation.getCurrentPosition(
+      function(p){ busy=false; geoQs='&lat='+p.coords.latitude.toFixed(3)+'&lng='+p.coords.longitude.toFixed(3); frame.src=findUrl(); },
+      function(){ busy=false; },
+      {timeout:6000, maximumAge:600000});
   });
+  if(window.matchMedia('(min-width: 768px)').matches){ reveal(); }
 })();
 </script>
 </body>

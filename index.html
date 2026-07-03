@@ -182,7 +182,7 @@
   .hostsec a:focus-visible{outline-color:var(--yellow)}/* visible on the dark panel */
 
   /* ============ ACTIVE CLIENT MAP (iframe /find) ============ */
-  .mappanel.live{min-height:clamp(560px,72vh,760px)}/* MOBILE FIX: desktopil kõrgem paneel */
+  .mappanel.live{min-height:clamp(620px,78vh,900px)}/* AUTO-OPEN: desktopil suur kaardipaneel */
   .mappanel .livemap{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:2}
   .mappanel .ldg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:10px;font-weight:700;color:var(--navy);background:rgba(247,245,239,.6);z-index:1}
   .mappanel .openfull{position:absolute;right:12px;top:12px;background:rgba(10,31,61,.92);color:#fff;padding:10px 16px;border-radius:999px;font-size:12.5px;font-weight:700;z-index:3}/* MOBILE FIX: üleval, et mitte katta kliendi alumist navi */
@@ -491,61 +491,63 @@
 </script>
 
 <script>
-  /* ============ ACTIVE CLIENT MAP (2026-07-03): CTA avab PÄRIS /find kaardi iframe'is ============
-     - klikk "Näita haagiseid" → geolocation (lubatud → &lat&lng; keelatud/timeout → ilma)
-       → iframe https://client.gorolli.com/find?lang=xx samas paneelis
-     - illustratsioon jääb AINULT laadimis-taustaks; "Illustratiivne eelvaade" sildid peidetakse
-     - "Ava täisotsing" nupp on kogu aeg nähtav (töötab ka siis, kui iframe on blokeeritud)
-     - teine klikk CTA-l = tavaline link täisotsingusse (JS-off fallback = sama link)
-     - keelevahetus uuendab iframe'i URL-i (grApplyI18n kutsub grActiveMapLang) */
+  /* ============ ACTIVE CLIENT MAP v2 (2026-07-03): desktop AUTO-OPEN ============
+     - desktop (≥768px): PÄRIS /find kaart avaneb KOHE lehe laadimisel, ILMA
+       geolokatsiooni küsimata — kasutaja saab kohe lohistada/suumida/valida
+     - CTA desktopil, kui kaart on lahti = "kasuta minu asukohta": geo lubamisel
+       tsentreeritakse SAMA iframe kasutaja koordinaatidele (&lat&lng)
+     - mobiil (≤767px): iframe'i EI avata kunagi; CTA klikk = otse /find samas tabis;
+       lehe laadimisel EI toimu mingit automaatset suunamist
+     - keelevahetus uuendab iframe'i URL-i (grApplyI18n → grActiveMapLang)
+     - illustratsioon = ainult laadimis-taust; "Ava täisotsing" pill üleval paremal */
   (function(){
     if(!GOROLLI_FLAGS.active_client_map || GOROLLI_FLAGS.live_map) return;
     var cta=document.getElementById('grFindCta');
     var panel=document.getElementById('mapPanel');
     if(!cta||!panel) return;
-    var opened=false, frame=null, geoQs='';
+    var frame=null, geoQs='', busy=false;
     function curLang(){ var m=cta.href.match(/[?&]lang=([a-zA-Z\-]+)/); return (m&&m[1])||'et'; }
     function findUrl(lang){ return 'https://client.gorolli.com/find?lang='+lang+geoQs; }
     function reveal(lang){
+      if(frame) return;
       panel.classList.add('live');
       panel.querySelectorAll('.tag,.note').forEach(function(x){ x.style.display='none'; });
+      var ldg=document.createElement('div');
+      ldg.className='ldg'; ldg.textContent='Avan päris kaarti…';
+      panel.appendChild(ldg);
       var url=findUrl(lang);
       frame=document.createElement('iframe');
       frame.className='livemap'; frame.title='GoRolli'; frame.allow='geolocation';
       frame.src=url;
-      var ldg=panel.querySelector('.ldg');
       var failT=setTimeout(function(){
         if(ldg) ldg.innerHTML='<a class="go" style="max-width:320px;padding:0 18px" href="'+url+'">Ava GoRolli otsing</a>';
       },9000);
-      frame.onload=function(){ clearTimeout(failT); if(ldg) ldg.remove(); ldg=null; };
+      frame.onload=function(){ clearTimeout(failT); if(ldg){ ldg.remove(); ldg=null; } };
       panel.appendChild(frame);
       var full=document.createElement('a');
       full.className='openfull'; full.href='https://client.gorolli.com/find?lang='+lang;
       full.target='_blank'; full.rel='noopener'; full.textContent='Ava täisotsing';
       panel.appendChild(full);
     }
-    /* keelevahetus: uuenda iframe + täisotsingu nupp (grAppLinks katab <a>-lingid niikuinii) */
     window.grActiveMapLang=function(lang){
       try{ if(frame){ frame.src=findUrl(lang); } }catch(e){}
     };
     cta.addEventListener('click',function(e){
-      /* MOBILE FIX (2026-07-03): mobiilis (≤767px) EI manusta — CTA navigeerib
-         otse /find lehele samas tabis; geo-küsimist ei tehta (klient küsib ise). */
+      /* MOBIIL: otse /find (sama tab), iframe'i ja geo-küsimiseta */
       if(window.matchMedia('(max-width: 767px)').matches) return;
-      if(opened) return; /* teine klikk → tavaline navigeerimine /find lehele */
-      e.preventDefault(); opened=true;
-      var ldg=document.createElement('div');
-      ldg.className='ldg'; ldg.textContent='Avan päris kaarti…';
-      panel.appendChild(ldg);
-      var lang=curLang();
-      if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(
-          function(p){ geoQs='&lat='+p.coords.latitude.toFixed(3)+'&lng='+p.coords.longitude.toFixed(3); reveal(lang); },
-          function(){ reveal(lang); },
-          {timeout:6000, maximumAge:600000}
-        );
-      } else { reveal(lang); }
+      e.preventDefault();
+      if(!frame){ reveal(curLang()); return; }
+      /* kaart lahti → CTA = kasuta minu asukohta (tsentreeri sama iframe) */
+      if(busy || !navigator.geolocation) return;
+      busy=true;
+      navigator.geolocation.getCurrentPosition(
+        function(p){ busy=false; geoQs='&lat='+p.coords.latitude.toFixed(3)+'&lng='+p.coords.longitude.toFixed(3); frame.src=findUrl(curLang()); },
+        function(){ busy=false; },
+        {timeout:6000, maximumAge:600000}
+      );
     });
+    /* AUTO-OPEN (ainult desktop ≥768px), ILMA geolokatsioonita */
+    if(window.matchMedia('(min-width: 768px)').matches){ reveal(curLang()); }
   })();
 </script>
 
