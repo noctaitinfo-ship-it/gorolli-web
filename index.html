@@ -223,7 +223,7 @@
         <span id="grCity" data-prefix="Sinu l&auml;hedal">Sinu l&auml;hedal &mdash; Eesti</span>
         <span class="approx" id="grApprox">Ligikaudne</span>
       </div>
-      <a class="go" id="grFindCta" href="https://client.gorolli.com?lang=et"><span id="grCtaTx" class="notranslate" translate="no">N&auml;ita haagiseid</span>
+      <a class="go" id="grFindCta" href="https://client.gorolli.com/find?lang=et"><span id="grCtaTx" class="notranslate" translate="no">N&auml;ita haagiseid</span>
         <svg width="18" height="14" viewBox="0 0 18 14" aria-hidden="true"><path d="M1 7h14M10 2l6 5-6 5" fill="none" stroke="#1a1300" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
@@ -430,8 +430,8 @@
     /* FLOW: homepage = finder, client web = real search, app = retention. The CTA must always land on
        client web search, never on an app store. When client web ships a public map/search route, set
        GR_FIND_PATH='/find' (also update grAppLinks + the static hero CTAs — see REDESIGN-NOTES flow addendum).
-       Until then the app root IS the closest existing search screen. */
-    var GR_FIND_PATH='';
+       FIND FLIP 2026-07-03: client /find is LIVE — flipped. grAppLinks preserves paths (marked mod). */
+    var GR_FIND_PATH='/find';
     function clientUrl(){ return 'https://client.gorolli.com'+GR_FIND_PATH+'?lang='+curLang(); }
     function state(html){ var s=panel.querySelector('.mstate'); if(!s){ s=document.createElement('div'); s.className='mstate'; panel.appendChild(s);} s.innerHTML=html; return s; }
     function showLoading(){ state('<h3>Otsin haagiseid&hellip;</h3><p>Kasutame ligikaudset asukohta.</p>'); }
@@ -579,7 +579,13 @@
     if(c){ c.value=''; c.dispatchEvent(new Event('change',{bubbles:true})); }
   }
   function grAppLinks(lang){
-    document.querySelectorAll('a[href^="https://client.gorolli.com"]').forEach(function(a){a.href='https://client.gorolli.com?lang='+lang;});
+    /* FIND FLIP (marked modification, 2026-07-03): preserve each client link's PATH —
+       hero CTA uses /find, app-card web button stays on the root; only the lang param
+       is swapped. Fallback (browsers without URL API) = old root behavior. */
+    document.querySelectorAll('a[href^="https://client.gorolli.com"]').forEach(function(a){
+      try{ var u=new URL(a.href); u.searchParams.set('lang',lang); a.href=u.toString(); }
+      catch(e){ a.href='https://client.gorolli.com?lang='+lang; }
+    });
     document.querySelectorAll('a[href^="https://host.gorolli.com"]').forEach(function(a){a.href='https://host.gorolli.com?lang='+lang;});
   }
   function grSet(lang){

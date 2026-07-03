@@ -26,7 +26,7 @@ Do **not** deploy, do **not** push to main. The previous redesign branch stays u
 | `grTranslateCode` he→iw, zh→zh-CN | verbatim |
 | `grCombo` combo driver + 80×200ms retry | verbatim |
 | `grRestore` Estonian restore (googtrans cookie deletion, no reload) | verbatim |
-| `grAppLinks` `?lang=` rewriting | verbatim |
+| `grAppLinks` `?lang=` rewriting | verbatim → **modified 2026-07-03 (FIND FLIP, marked)**: client rewrite is now path-preserving (swaps only `lang`; old-behavior fallback) |
 | `grSet`, langbar click handlers + `localStorage['gr_lang']` | verbatim |
 | Auto-detect order: saved → ipapi country → browser language → `en` | verbatim |
 | Anti-banner 300ms watchdog | verbatim |
@@ -217,3 +217,6 @@ Full build spec with FlutterFlow click-paths, metadata table, homepage-flip chec
 
 ## F3 · App-as-retention framing (copy added)
 Line under "Two apps" heading on index (ET, GT translates the rest) and all 7 static pages (localized), also added to `i18n/finder-strings.json` as `app_retention` (44th key, all 32 languages): *"Use GoRolli often? The app is faster next time — the browser works right away."* No behavior change; store badges stay where they were (below the fold, after search intent).
+
+## F4 · FIND FLIP (2026-07-03) — Finder now sends renters to client /find
+Client `/find` is live, so the homepage was flipped: `GR_FIND_PATH='/find'`; hero CTAs on index + all 7 static pages point to `https://client.gorolli.com/find?lang=xx`; `grAppLinks` client-rewrite is now **path-preserving** (first marked modification inside the preserved block — swaps only the `lang` param via the URL API, with the old root-rewrite as fallback), so `/find` survives every language switch (et→fi keeps `/find?lang=fi`). App-card "open in browser" buttons intentionally stay on the client root. Host links unchanged. `live_map` remains **false** — no live map, no iframe, no fake pins.
