@@ -81,7 +81,7 @@ GET /api/home/nearby?lat=59.437&lng=24.745&r=5000
     pins:[{lat,lng,type,price_from}] }   // coords rounded to ~300m grid server-side,
                                          // max ~30 pins, no IDs/addresses/host names
 ```
-Optional later: per-area search count (last 30 d) to power "renters are already looking" honestly — the line is **not** shown until that data exists. The `&q=` city parameter passed by manual search needs a matching param on client.gorolli.com (TODO: confirm the real query param name).
+Optional later: per-area search count (last 30 d) to power "renters are already looking" honestly — the line is **not** shown until that data exists. Manual search passes `&city=`, granted-GPS full search passes `&lat=`/`&lng=` (3 decimals ≈ coarse) — client web (FlutterFlow) must read these page parameters (see FLOW addendum).
 
 ## 4 · Performance
 - First paint = static HTML + one inline stylesheet; hero needs **zero JS**; CTA is a real link (JS-off fallback → client.gorolli.com).
@@ -110,3 +110,111 @@ Optional later: per-area search count (last 30 d) to power "renters are already 
 
 ## 6 · Files in this folder
 `index.html` (root, ET + GT), `en/et/de/fi/lv/lt/pl.html` (static, zero-JS), `REDESIGN-NOTES.md`, plus copies of `favicon.png` and the two poster images **only so the preview here works** — they're identical to the repo's own files; don't overwrite anything binary when copying to the repo.
+
+---
+---
+
+# I18N PASS ADDENDUM (2026-07-03) — internationalization, domains, links
+
+All changes below are additive and tagged `I18N ADD` in code. The preserved blocks above stay verbatim; only three marked one-line call insertions were made inside them (listed in §I3).
+
+## I1 · New file: `/i18n/finder-strings.json`
+Source of truth for the Finder vocabulary: **42 strings × 32 languages** (hero, GPS/live-map states, host path, trust, how-it-works, videos, legal). Rules applied: short mobile-friendly copy, meaning over literal translation, no inventory counts, no earnings promises, no "largest", no exact-location claims. Serbian is Cyrillic (matches GT `sr`). Arabic/Hebrew arrows point left (RTL).
+
+## I2 · Root `index.html` — instant first-screen dictionary (GT-safe)
+- New `GR_I18N` inline dictionary (32 languages × 8 first-screen keys: h1, lead, near, approx, cta, noapp, host, lang) + `grApplyI18n(lang)`.
+- The first-screen elements got ids (`grH1 grLead grCity grApprox grCtaTx grNoApp grHostLine grLangHead`) and `notranslate`/`translate="no"` so Google Translate **skips** them — no double translation, no fighting. Everything else on the page keeps the preserved GT fallback.
+- CTA text wrapped in `<span id="grCtaTx">` (arrow SVG untouched).
+- `.approx` badge is now plain-case + CSS `text-transform:uppercase` (works for all alphabets, no-op for CJK).
+- Hero location label: dictionary prefix + detected city ("Lähelläsi — Tallinn"). City comes from the SAME preserved ipapi response (`grCityKnown`, one marked line added). No city known → prefix only; Estonian default keeps the static "Sinu lähedal — Eesti".
+- `grPlayLinks(lang)`: appends/refreshes `&hl=` on both Google Play links on every language change. `he→iw`, `zh→zh-CN` (same mapping style as GT). Package ids never touched. Static baseline in markup: `&hl=et`. JSON-LD `installUrl` intentionally unchanged.
+- **Head exception (signed off):** `index.html` `meta description` + `og:description` updated to the Finder wording ("GoRolli — leia haagis lähedalt. Kliendi ja hosti äpid, 32 keelt, saadaval 175 riigis. Töötab ka brauseris.") — removed "Üks app" and the old earning phrasing. Title, canonical, hreflang, OG url/title/image, Twitter, JSON-LD, robots meta remain byte-identical to main.
+
+## I3 · Marked insertions inside preserved code (the ONLY touches)
+1. `grSet()`: `grApplyI18n(lang); grPlayLinks(lang);` after `grAppLinks(lang)` — manual pill choice.
+2. auto-detect `go()`: same two calls after `grAppLinks(lang)` — saved/country/browser path.
+3. ipapi callback: `grCityKnown=d.city;` inside the existing REDESIGN ADD try/catch.
+
+Flow (unchanged order): saved `localStorage.gr_lang` → ipapi country (`C2L`) → browser language → `en`. Every switch now updates: pill highlight, hero strings (instant, no GT delay), `?lang=` on all client/host links, `&hl=` on both Play links, then GT translates the rest of the page. EE restore path also restores the ET dictionary strings.
+
+## I4 · Static language pages (7 files)
+- Google Play links now carry the page's own language: `&hl=en/et/de/fi/lv/lt/pl` (3 links per page: host section + client card + host card; `&amp;` in markup).
+- Footer "Privacy" and "Terms" labels are now real links to `/privacy` and `/terms` in each language (were plain text). `terms.html` exists as a **draft/noindex placeholder** (see blockers).
+- Everything else untouched: heads byte-exact, `?lang=` hardcoded per route, langnav, kw line.
+
+## I5 · App Store limitation (report, not a bug)
+`https://apps.apple.com/us/search?term=GoRolli` is a **US-storefront search link**. Apple decides UI language/storefront by the user's Apple ID and device — a URL cannot force it, and non-US users may be prompted to switch storefronts. Unavoidable until real product URLs exist. When the apps are live, replace with per-storefront product URLs, e.g. `https://apps.apple.com/fi/app/gorolli/id<ID>?l=fi` — client/host separation then also becomes possible on iOS (today both App Store badges point at the same search).
+
+## I6 · Domain / redirect requirements (Cloudflare — NOT changed here)
+No `_redirects`/`wrangler`/routing files exist in this repo; redirects live in Cloudflare only. Required rules (301 unless noted):
+| From | To | Note |
+|---|---|---|
+| `gorolli.com/*` | `https://www.gorolli.com/$1` | canonical + hreflang all use www |
+| `http://*` | `https://*` | Always Use HTTPS |
+| `gorolli.fi/*` | `https://www.gorolli.com/fi` | country domain → language route |
+| `gorolli.de/*` | `https://www.gorolli.com/de` | idem |
+| `gorolli.lv/*` | `https://www.gorolli.com/lv` | idem |
+| `gorolli.lt/*` | `https://www.gorolli.com/lt` | idem |
+| `gorolli.pl/*` | `https://www.gorolli.com/pl` | idem |
+| `gorolli.ee/*` (if registered) | `https://www.gorolli.com/et` | idem |
+| `client.gorolli.com` | client web app | separate app, not this repo; must accept `?lang=xx` (+ `&city=`, `&lat=`/`&lng=` — see FLOW addendum) |
+| `host.gorolli.com` | host web app | separate app, not this repo; must accept `?lang=xx` |
+Clean routes `/en /et /de /fi /lv /lt /pl /privacy` are extensionless — Cloudflare Pages serves `xx.html` automatically; if the site is NOT on Pages, add explicit rewrites. Country-domain redirects should NOT pass deep paths through (they don't exist on gorolli.com); redirect everything to the language route.
+
+## I7 · i18n test matrix (add to §5 checklist)
+- FI fresh visitor on `/` → hero instantly Finnish (dictionary), rest of page GT-Finnish, CTA `client.gorolli.com?lang=fi`, host links `?lang=fi`, Play links `&hl=fi`, FI pill highlighted
+- Same for DE/EE/LV/LT/PL fresh visitors (ipapi), and `/fi` `/de` … static pages: `?lang=` + `&hl=` match the route
+- Unknown-country + EN browser → English everything, `?lang=en`, `&hl=en`
+- Manual switch ET→FI: hero swaps instantly (no GT flash on first screen), all links update, `gr_lang=fi` persists after reload
+- he pill → GT combo gets `iw`, Play links get `&hl=iw`; zh pill → `zh-CN` both
+- EE pill after another language → Estonian hero restored from dictionary, googtrans cookie cleared, no reload
+- GT banner stays hidden after every switch; no reload loops (dictionary writes are textContent/innerHTML only)
+- JS off: ET page + working `?lang=et` links + `&hl=et` baseline; static pages fully localized with zero JS
+- ipapi blocked/adblocked: browser-language fallback still localizes hero + links (no city label — prefix only)
+
+## I8 · Hard blockers before production live
+1. **Terms is a placeholder** — `terms.html` exists and is linked from all 8 footers, but it is a draft marked `noindex`. Okay for the preview branch; the final Terms of Service must be legally reviewed and approved (and the `noindex` removed) before production live.
+2. `apps.apple.com` search link — acceptable temporarily, replace with real product URLs when available (see I5).
+3. Root page translations beyond the first screen still depend on Google Translate (by design). If GT is blocked (e.g. some networks), users still get the ET first screen in their language + working links — acceptable, but full static pages exist only for 7 languages.
+
+## I9 · What static web code cannot solve (limitations)
+- App Store UI language/storefront (Apple ID/device decides) — see I5.
+- Google Play `&hl=` is a hint: Play falls back to the user's account language if the store listing has no translation for that language. Store listings themselves must be translated in Play Console / App Store Connect.
+- GT machine-translation quality for the 25 languages without static pages — the first-screen dictionary is human-quality; the rest of the page is GT until real static pages are added.
+- RTL (ar/he): first-screen strings render RTL inline correctly, but the page layout stays LTR (GT behaves the same today; a real RTL layout needs `dir="rtl"` styling work).
+- ipapi.co is rate-limited/blockable: country detection silently falls back to browser language (unchanged, preserved behavior).
+
+---
+
+# RESPONSIVE/A11Y HARDENING ADDENDUM (2026-07-03, second pass)
+
+CSS + small semantic markup only; no layout concept, strategy, or script logic changed. Tagged `RESPONSIVE` in code.
+
+**Head (signed off):** `<title>` + `og:title` aligned to demand-first wording ("GoRolli — leia haagis lähedalt"); `viewport-fit=cover` added to the viewport meta on all 8 pages (safe-area support). Canonical/hreflang/JSON-LD/robots untouched.
+
+**index.html:** fluid type `clamp()` for h1/lead (no more fixed 56px→38px jump); header `min-height` + wrap (long translated pills can never clip, rule: no fixed heights); tap targets ≥44px (topnav pills, host line, language pills; store badges 48px); `.steps/.appgrid/.ngrid` use `auto-fit` grids so iPad portrait gets 3/2/2 columns instead of a stretched phone stack; `.finder` capped at 680px centered on ≤900px; safe-area padding on `.wrap` + footer; `overflow-wrap:break-word` on all text/buttons; `#grCity` flexes so long city names shrink instead of pushing the badge out; `.mstate` scrolls instead of clipping (live-map states on short panels); visible `:focus-visible` outlines (navy, yellow on the dark host panel); language pills are now real `<button type="button">`s (same `.lpill`/`data-l` — preserved JS is selector-based, verified unaffected) inside `role="group"` labelled by the localized heading; video cards respond to Enter/Space.
+
+**7 static pages:** same treatment — viewport-fit, clamp h1, 44px `.btn`/langnav targets, auto-fit steps/cards (tablet composure), safe-area padding, overflow-wrap, focus outlines.
+
+**Not changed (verified):** map SVG stays ~1KB inline, no map library, videos click-to-play only, no framework, DOM order (mobile: text/CTA first, map below) — already correct.
+
+**Known risks:** RTL layout still LTR (ar/he strings render, mirroring is future work); GT-injected long strings in sections outside the dictionary rely on `overflow-wrap` (covered) but extreme cases (e.g. German in 32-char buttons) may wrap to 2 lines — buttons grow via min-height, by design; `env(safe-area-inset-*)` is ignored by browsers that don't support it (graceful, falls back to 24px).
+
+---
+
+# FLOW CORRECTION ADDENDUM (2026-07-03, third pass) — app is a bonus, not the gate
+
+Principle confirmed in code: **homepage = trailer finder, client web = real search, app = retention.** The primary CTA has never pointed at an app store and still doesn't — this pass tightened the routing spec and framing.
+
+## F1 · CTA routing (verified + prepared)
+- Hero CTA → `https://client.gorolli.com?lang=xx` (client WEB). App stores appear only in the below-fold apps section and host section. Nothing routes the main path to an install page. Client/Host app split appears only after search intent.
+- **`/find` probe result:** client.gorolli.com is a FlutterFlow SPA — `/find` and `/` currently serve the same shell, so a dedicated public route can't be confirmed from outside. `GR_FIND_PATH` constant added in the finder script: set to `'/find'` when the route ships (then also update `grAppLinks` and the 8 static hero CTAs, which today rewrite/point to the root — the root IS the closest existing search screen, per spec).
+- Flag-gated URL contract updated (all behind `live_map:false`, nothing fires today): GPS granted → full search carries `&lat=…&lng=…` (3 decimals, coarse); GPS denied → manual city input → `&city=…` (was `&q=`); API down → straight to client web.
+
+## F2 · Client web (FlutterFlow) requirements — outside this repo
+1. Add a public map/search page reachable without login (the "/find" target), then flip `GR_FIND_PATH`.
+2. Read page parameters: `lang` (already honored), `city`, `lat`, `lng` — center the map / prefill the search from them.
+3. Fix FlutterFlow web metadata: the client web currently serves title "GoRolli2", description "Built with FlutterFlow", a FlutterFlow OG splash image, and `noindex`. Renters arriving from the homepage see "GoRolli2" in the tab. Set real title/description/OG in FlutterFlow app settings. Keep or reconsider `noindex` deliberately.
+
+## F3 · App-as-retention framing (copy added)
+Line under "Two apps" heading on index (ET, GT translates the rest) and all 7 static pages (localized), also added to `i18n/finder-strings.json` as `app_retention` (44th key, all 32 languages): *"Use GoRolli often? The app is faster next time — the browser works right away."* No behavior change; store badges stay where they were (below the fold, after search intent).
