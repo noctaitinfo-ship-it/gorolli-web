@@ -69,6 +69,7 @@ Do **not** deploy, do **not** push to main. The previous redesign branch stays u
 - No web fonts: system font stack everywhere (deliberate — zero blocking third-party CSS, instant first paint).
 
 ## 3 · Feature flag + backend contract (`live_map`)
+> **SUPERSEDED (2026-07-03):** the API contract below is replaced by `/api/public/trailers/nearby` in **`public-live-map-plan.md`** (superset response — same summary fields plus a `trailers[]` array for the homepage Map Lite). The flag/flow description remains accurate.
 `index.html` defines `var GOROLLI_FLAGS = { live_map: false }`.
 
 - **false (today):** map is a labeled illustrative preview ("Illustratiivne eelvaade"); the CTA is a plain `<a>` to `client.gorolli.com?lang=xx` — works with JS disabled. No geolocation prompt ever fires.

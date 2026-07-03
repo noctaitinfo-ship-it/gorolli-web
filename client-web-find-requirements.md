@@ -20,9 +20,11 @@ Create page **FindPage** in the FlutterFlow client project:
   | `city` | String | Free-text city/address to search by |
   | `lat` | double | Map center latitude (comes rounded to 3 decimals) |
   | `lng` | double | Map center longitude (rounded to 3 decimals) |
+  | `trailer_id` | String | Opaque public trailer id (Phase 4) → focus that trailer, open its detail sheet |
+  | `open` | String | `booking` (Phase 4) → after focusing `trailer_id`, continue straight into the booking flow; auth prompt appears here, and after login the user returns to the SAME trailer/booking. Unknown/expired `trailer_id` → plain find view (never an error, never app install) |
 
 Examples that must work:
-`/find?lang=et` · `/find?lang=fi` · `/find?lang=de` · `/find?lang=et&city=Tartu` · `/find?lang=et&lat=58.378&lng=26.729`
+`/find?lang=et` · `/find?lang=fi` · `/find?lang=de` · `/find?lang=et&city=Tartu` · `/find?lang=et&lat=58.378&lng=26.729` · `/find?lang=et&trailer_id=abc123` · `/find?lang=et&lat=58.378&lng=26.729&trailer_id=abc123&open=booking`
 
 ## 2 · Page On Load actions (in order)
 1. **Language**: if `lang` param present and supported → action **Set App Language** = `lang`. Unknown/missing → keep existing detection (device/app default). Must match the 32-language codes used by the homepage (he/zh arrive as `he`/`zh` — map internally if the app uses `iw`/`zh-CN`).

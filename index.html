@@ -400,7 +400,8 @@
 <script>
   /* Feature flag: live map on the homepage. false = the map stays a labeled illustrative
      preview and the primary CTA is a plain link to client.gorolli.com (real search).
-     Flip to true ONLY when the /api/home/nearby endpoint exists (see REDESIGN-NOTES.md). */
+     Flip to true ONLY when the public inventory API exists: /api/public/trailers/nearby —
+     contract in public-live-map-plan.md (supersedes the old /api/home/nearby note). Never fake pins. */
   var GOROLLI_FLAGS = { live_map: false };
 </script>
 
@@ -421,7 +422,7 @@
      With live_map=false none of this runs and the CTA stays a plain link (works without JS). */
   (function(){
     if(!GOROLLI_FLAGS.live_map) return;
-    var API='/api/home/nearby'; /* TODO backend: see REDESIGN-NOTES.md for the contract */
+    var API='/api/public/trailers/nearby'; /* TODO backend: contract in public-live-map-plan.md — its summary fields (count, min_price, nearest_km) keep this machine working as-is; trailers[] powers the Phase-3 Map Lite */
     var cta=document.getElementById('grFindCta');
     var panel=document.getElementById('mapPanel');
     if(!cta||!panel) return;
