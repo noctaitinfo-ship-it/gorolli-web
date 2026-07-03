@@ -92,6 +92,12 @@ footer{padding-bottom:calc(26px + env(safe-area-inset-bottom))}
 h1,h2,h3,p,.btn,.go,.hostline{overflow-wrap:break-word}
 a:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
 .hostsec a:focus-visible{outline-color:var(--yellow)}
+/* ACTIVE CLIENT MAP (iframe /find) */
+.preview.live{max-width:none;height:70vh;min-height:420px}
+.preview.live .livemap{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:2}
+.preview.live .ldg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--navy);z-index:1}
+.preview.live .openfull{position:absolute;right:10px;bottom:10px;background:rgba(10,31,61,.92);color:#fff;padding:9px 14px;border-radius:999px;font-size:12px;font-weight:700;z-index:3}
+@media(min-width:721px){.preview.live{height:520px}}
 </style>
 </head>
 <body>
@@ -164,5 +170,40 @@ a:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
 <p class="alllangs">Kõik 32 keelt lehel <a href="https://www.gorolli.com/">gorolli.com</a></p>
 </div></main>
 <footer><div class="wrap">© 2026 GoRolli · <a href="/terms">Tingimused</a> · <a href="/privacy">Privaatsus</a></div></footer>
+<script>
+/* AKTIIVNE KLIENDIKAART (2026-07-03): CTA avab PÄRIS /find kaardi samal lehel.
+   JS väljas -> CTA jääb tavaliseks /find lingiks (muutmata käitumine). */
+(function(){
+  var cta=document.querySelector('a.go'); var pv=document.querySelector('.preview');
+  if(!cta||!pv) return;
+  var LANG='et', LOADING='Avan päris kaarti…', OPENFULL='Ava täisotsing', FALLBACK='Ava GoRolli otsing';
+  var opened=false;
+  cta.addEventListener('click',function(e){
+    if(opened) return;
+    e.preventDefault(); opened=true;
+    pv.classList.add('live');
+    pv.innerHTML='<div class="ldg">'+LOADING+'</div>';
+    function show(url){
+      var f=document.createElement('iframe');
+      f.className='livemap'; f.title='GoRolli'; f.allow='geolocation'; f.src=url;
+      var ldg=pv.querySelector('.ldg');
+      var failT=setTimeout(function(){ if(ldg) ldg.innerHTML='<a class="go" style="max-width:320px;padding:0 18px" href="'+url+'">'+FALLBACK+'</a>'; },9000);
+      f.onload=function(){ clearTimeout(failT); if(ldg){ ldg.remove(); ldg=null; } };
+      pv.appendChild(f);
+      var a=document.createElement('a');
+      a.className='openfull'; a.href='https://client.gorolli.com/find?lang='+LANG;
+      a.target='_blank'; a.rel='noopener'; a.textContent=OPENFULL;
+      pv.appendChild(a);
+    }
+    var base='https://client.gorolli.com/find?lang='+LANG;
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(
+        function(p){ show(base+'&lat='+p.coords.latitude.toFixed(3)+'&lng='+p.coords.longitude.toFixed(3)); },
+        function(){ show(base); },
+        {timeout:6000, maximumAge:600000});
+    } else { show(base); }
+  });
+})();
+</script>
 </body>
 </html>
