@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="index, follow">
+<meta name="googlebot" content="index, follow">
+<title>GoRolli &mdash; leia haagis l&auml;hedalt</title>
+<meta name="description" content="GoRolli &mdash; leia haagis l&auml;hedalt. Kliendi ja hosti &auml;pid, 32 keelt, saadaval 175 riigis. T&ouml;&ouml;tab ka brauseris.">
+<meta name="theme-color" content="#0A1F3D">
+<link rel="canonical" href="https://www.gorolli.com/">
+<link rel="alternate" hreflang="et" href="https://www.gorolli.com/et">
+<link rel="alternate" hreflang="en" href="https://www.gorolli.com/en">
+<link rel="alternate" hreflang="de" href="https://www.gorolli.com/de">
+<link rel="alternate" hreflang="fi" href="https://www.gorolli.com/fi">
+<link rel="alternate" hreflang="lv" href="https://www.gorolli.com/lv">
+<link rel="alternate" hreflang="lt" href="https://www.gorolli.com/lt">
+<link rel="alternate" hreflang="pl" href="https://www.gorolli.com/pl">
+<link rel="alternate" hreflang="x-default" href="https://www.gorolli.com/en">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.gorolli.com/">
+<meta property="og:title" content="GoRolli &mdash; leia haagis l&auml;hedalt">
+<meta property="og:description" content="GoRolli &mdash; leia haagis l&auml;hedalt. Kliendi ja hosti &auml;pid, 32 keelt, saadaval 175 riigis. T&ouml;&ouml;tab ka brauseris.">
+<meta property="og:image" content="https://www.gorolli.com/screenshots/host-t1.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Organization","@id":"https://www.gorolli.com/#org","name":"GoRolli","url":"https://www.gorolli.com/","logo":"https://www.gorolli.com/favicon.png","sameAs":["https://www.tiktok.com/@gorolli","https://www.facebook.com/profile.php?id=61581508063664"]},
+{"@type":"WebSite","@id":"https://www.gorolli.com/#website","name":"GoRolli","url":"https://www.gorolli.com/","publisher":{"@id":"https://www.gorolli.com/#org"},"inLanguage":["en","et","de","fi","lv","lt","pl"]},
+{"@type":"MobileApplication","name":"GoRolli","operatingSystem":"Android, iOS","applicationCategory":"TravelApplication","url":"https://www.gorolli.com/","installUrl":"https://play.google.com/store/apps/details?id=com.mycompany.Hotelio","publisher":{"@id":"https://www.gorolli.com/#org"},"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"}}
+]}
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 66 58'%3E%3Crect width='66' height='58' rx='14' fill='%230A1F3D'/%3E%3Cpath fill='%23FDC51A' d='M16 31 C14 21 20 13 30 13 L45 13 C54 13 61 20 61 30 C61 36 57 41 51 41 L20 41 C18 41 16 37 16 31 Z'/%3E%3Ccircle cx='29' cy='43' r='13.5' fill='%23FDC51A'/%3E%3Ccircle cx='29' cy='43' r='5' fill='%230A1F3D'/%3E%3C/svg%3E">
+<style>
+  /* ============ THE FINDER — new face (redesign/gorolli-finder-demand-first) ============ */
+  :root{
+    --yellow:#FDC51A; --yellow-d:#E9A100;
+    --navy:#0A1F3D; --navy2:#0E2A50;
+    --paper:#F7F5EF; --ink:#101826;
+    --muted:#5B6472; --line:rgba(10,31,61,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--paper);color:var(--ink);line-height:1.5}
+  a{text-decoration:none;color:inherit}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+
+  header{border-bottom:1px solid var(--line);background:var(--paper)}
+  nav{display:flex;align-items:center;justify-content:space-between;gap:8px 12px;flex-wrap:wrap;min-height:64px;padding:8px 0}/* RESPONSIVE: min-height + wrap so long translated pills never clip */
+  .logo{display:flex;align-items:center;gap:9px}
+  .logo .mark{width:36px;height:auto;display:block;flex:0 0 auto}
+  .logo .wm{font-weight:800;font-size:23px;letter-spacing:-.5px;color:var(--navy)}
+  .topnav{display:flex;align-items:center;gap:10px}
+  .topnav a{display:inline-flex;align-items:center;min-height:44px;font-size:13px;font-weight:700;color:var(--navy);padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#fff}
+  .topnav a.hosttop{background:rgba(253,197,26,.18);border-color:rgba(233,161,0,.4)}
+  .topnav a:hover{border-color:var(--navy)}
+
+  /* hero — the Finder */
+  .finder{display:grid;grid-template-columns:1.05fr 1fr;gap:44px;align-items:center;padding:52px 0 44px}
+  h1{font-size:clamp(34px,5vw + 16px,56px);line-height:1.05;letter-spacing:-1.2px;color:var(--navy);margin-bottom:14px}/* RESPONSIVE: fluid, survives long translations */
+  .lead{font-size:clamp(15.5px,1vw + 12px,17.5px);color:var(--muted);max-width:520px;margin-bottom:26px}
+  .search{background:#fff;border:1px solid var(--line);border-radius:20px;padding:10px;max-width:540px;box-shadow:0 14px 36px rgba(10,31,61,.09)}
+  .loc{display:flex;align-items:center;gap:10px;background:#EFEDE5;border-radius:13px;min-height:54px;padding:10px 16px;font-weight:600;font-size:15.5px}
+  .loc svg{flex:0 0 auto}
+  .loc .approx{margin-left:auto;font-size:9.5px;font-weight:700;letter-spacing:.08em;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:4px 8px;white-space:nowrap;text-transform:uppercase}/* I18N ADD: uppercase via CSS so dictionary values stay plain-case */
+  .go{display:flex;align-items:center;justify-content:center;gap:9px;min-height:58px;background:var(--yellow);border-radius:13px;margin-top:8px;font-weight:800;font-size:17px;color:#1a1300;cursor:pointer}
+  .go:hover{background:var(--yellow-d)}
+  .noapp{margin:13px 2px 0;font-size:13.5px;color:var(--muted);font-weight:600}
+  .hostline{display:inline-block;margin:20px 2px 0;font-size:15px;font-weight:600}
+  .hostline b{color:#9A6B00}
+  .hostline:hover b{text-decoration:underline;text-underline-offset:3px}
+
+  .mappanel{position:relative;border-radius:22px;overflow:hidden;border:1px solid var(--line);background:#E9ECE3;min-height:440px}
+  .mappanel .mapart{position:absolute;inset:0;width:100%;height:100%}
+  .mappanel .tag{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.94);border-radius:999px;padding:6px 12px;font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+  .mappanel .note{position:absolute;left:14px;bottom:14px;background:rgba(10,31,61,.85);color:#fff;border-radius:999px;padding:6px 13px;font-size:11.5px;font-weight:600}
+  .mstate{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:12px;padding:28px;background:rgba(247,245,239,.94)}
+  .mstate h3{font-size:22px;color:var(--navy);letter-spacing:-.4px}
+  .mstate p{color:var(--muted);font-size:14.5px}
+  .mstate .minput{width:100%;max-width:340px;min-height:52px;border:2px solid var(--navy);border-radius:13px;padding:0 16px;font:inherit;font-size:15px;background:#fff}
+  .mstate .go{width:100%;max-width:340px;margin-top:0}
+  .mstate .mhost{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:13.5px;max-width:340px}
+  .mstate .mhost a{display:inline-block;margin-top:6px;font-weight:800;color:#9A6B00}
+
+  /* proof band */
+  .band{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0}
+  .band .wrap{display:flex;flex-wrap:wrap;gap:10px 40px;font-weight:800;font-size:14.5px;color:var(--navy)}
+
+  /* how */
+  .how{padding:44px 0 10px}
+  h2{font-size:27px;letter-spacing:-.6px;color:var(--navy);margin-bottom:16px}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}/* RESPONSIVE: 3-up desktop/tablet, stacks on phones */
+  .step{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}
+  .step .n{font-weight:800;font-size:16px;color:var(--navy)}
+  .step p{color:var(--muted);font-size:14px;margin-top:5px}
+
+  /* host section */
+  .hostsec{margin:40px 0}
+  .hostsec .in{background:var(--navy);color:#EDF0F6;border-radius:22px;padding:38px 36px;display:flex;align-items:center;gap:30px;flex-wrap:wrap}
+  .hostsec .eyebrow{color:var(--yellow);font-size:11px;font-weight:800;letter-spacing:.15em}
+  .hostsec h2{color:#fff;margin:8px 0 8px}
+  .hostsec p{color:#B9C2D2;font-size:15px;max-width:520px}
+  .hostsec .grow{flex:1;min-width:260px}
+  .hostbtn{display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:0 26px;background:var(--yellow);border-radius:13px;font-weight:800;font-size:16px;color:#1a1300}
+  .hostbtn:hover{background:var(--yellow-d)}
+  .hostsec .apphint{display:block;margin-top:10px;font-size:12.5px;color:#8E99AC}
+
+  /* apps */
+  .apps{padding:6px 0 8px}
+  .apps .leadsm{color:var(--muted);margin:-6px 0 18px;font-size:14.5px}/* FLOW: app-as-retention framing line */
+  .appgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+  .appcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px}
+  .appcard h3{font-size:17px;color:var(--navy);margin-bottom:14px}
+  .stores{display:flex;gap:8px;flex-wrap:wrap}
+  .store{display:inline-flex;align-items:center;gap:8px;min-height:48px;background:#000;border:1px solid #2c2f44;color:#fff;padding:8px 14px;border-radius:12px}
+  .store:hover{border-color:#4a4e68}
+  .store svg{width:21px;height:21px;flex:0 0 auto}
+  .store .tx{line-height:1;text-align:left}
+  .store .tx small{display:block;font-size:8.5px;opacity:.8;margin-bottom:2px;letter-spacing:.3px}
+  .store .tx b{font-size:13px}
+  .webbtn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;margin:10px 0 0;
+    background:var(--paper);border:1.5px solid var(--line);color:var(--navy);padding:13px;border-radius:12px;font-size:13.5px;font-weight:700}
+  .webbtn:hover{border-color:var(--navy)}
+  .webbtn svg{width:19px;height:19px;flex:0 0 auto}
+
+  /* trust */
+  .trust{padding:28px 0 8px}
+  .trust .wrap{display:flex;flex-wrap:wrap;gap:12px 34px}
+  .trust span{display:flex;align-items:center;gap:9px;font-weight:600;font-size:14.5px}
+
+  /* videos — click-to-play only, no autoplay */
+  .news{padding:36px 0 18px}
+  .news .leadsm{color:var(--muted);margin:-8px 0 20px;font-size:14.5px}
+  .ngrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+  .ncard{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}
+  .ncard .th{height:250px;position:relative;background:#0A1F3D}
+  .ncard .b{padding:18px 20px 22px}
+  .ncard .badge{font-size:11px;font-weight:700;color:#1a1300;background:var(--yellow);padding:4px 11px;border-radius:999px}
+  .ncard h4{font-size:19px;margin:12px 0 5px;letter-spacing:-.3px;color:var(--navy)}
+  .ncard p{color:var(--muted);font-size:14px}
+  .ncard.video{cursor:pointer}
+  .ncard.video .playbtn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60px;height:60px;
+    border-radius:50%;background:rgba(255,255,255,.94);display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+  .ncard.video .playbtn::before{content:"";border-left:20px solid #111;border-top:12px solid transparent;border-bottom:12px solid transparent;margin-left:5px}
+  .ncard.video:hover .playbtn{transform:translate(-50%,-50%) scale(1.06)}
+
+  footer{border-top:1px solid var(--line);padding:34px 0;color:var(--muted);font-size:14px;margin-top:26px}
+  .langhead{font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--muted);margin-bottom:10px}
+  .langwrap{margin-bottom:28px}
+  .langbar{display:flex;flex-wrap:wrap;gap:7px}
+  .lpill{display:inline-flex;align-items:center;min-height:44px;font-family:inherit;background:#fff;border:1px solid var(--line);color:#5B6472;
+    padding:6px 12px;border-radius:8px;font-size:12px;font-weight:700;letter-spacing:.5px;cursor:pointer}/* RESPONSIVE: 44px touch target; works as <button> */
+  .lpill:hover{border-color:var(--navy);color:var(--navy)}
+  .lpill.on{background:var(--yellow);border-color:var(--yellow);color:#1a1300}
+  .fgrid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;align-items:center;
+    border-top:1px solid var(--line);padding-top:24px}
+  .fgrid .wm{color:var(--navy)}
+
+  @media(max-width:900px){
+    .finder{grid-template-columns:1fr;gap:22px;padding:30px 0 28px;max-width:680px}/* RESPONSIVE: tablets get a composed centered column, not a stretched phone */
+    .mappanel{min-height:210px}
+    .ncard .th{height:210px}
+    .hostsec .in{padding:28px 22px}
+    .topnav a.langtop{display:none}
+  }
+  /* ============ RESPONSIVE/A11Y HARDENING ADD ============ */
+  .wrap{padding-left:max(24px,env(safe-area-inset-left));padding-right:max(24px,env(safe-area-inset-right))}/* iPhone safe areas (viewport-fit=cover) */
+  @media(max-width:400px){
+    .wrap{padding-left:max(18px,env(safe-area-inset-left));padding-right:max(18px,env(safe-area-inset-right))}
+    .search{padding:8px}
+    .mappanel{min-height:190px}
+  }
+  footer{padding-bottom:calc(34px + env(safe-area-inset-bottom))}
+  h1,h2,h3,h4,p,.go,.hostbtn,.webbtn,.step,.hostline,.noapp,.mstate{overflow-wrap:break-word}/* long translations wrap, never overflow */
+  .loc #grCity{flex:1 1 auto;min-width:0;overflow-wrap:break-word}/* long city/prefix shrinks instead of pushing the badge out */
+  .mstate{overflow:auto;-webkit-overflow-scrolling:touch}/* live-map states scroll instead of clipping on short panels */
+  .hostline{padding:12px 0;margin:10px 2px 0}/* ~44px tap area for the host link */
+  a:focus-visible,button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--navy);outline-offset:2px}
+  .hostsec a:focus-visible{outline-color:var(--yellow)}/* visible on the dark panel */
+
+  /* ============ PRESERVED: Google Translate chrome hiding (keep translator working) ============ */
+
+  /* ============ PRESERVED: Google Translate chrome hiding (keep translator working) ============ */
+  .goog-te-banner-frame, iframe.skiptranslate{display:none!important;visibility:hidden!important;height:0!important}
+  .goog-te-gadget{height:0!important;overflow:hidden!important;font-size:0!important}
+  .goog-tooltip,.goog-te-balloon-frame,#goog-gt-tt{display:none!important}
+  body{top:0!important;position:static!important}
+  #google_translate_element{position:fixed;left:-9999px;top:0}
+  font[style]{background:transparent!important;box-shadow:none!important}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap"><nav>
+    <a class="logo" href="#">
+      <svg class="mark" viewBox="0 0 66 58" aria-hidden="true">
+        <path fill="#FDC51A" d="M16 31 C14 21 20 13 30 13 L45 13 C54 13 61 20 61 30 C61 36 57 41 51 41 L20 41 C18 41 16 37 16 31 Z"/>
+        <circle cx="29" cy="43" r="13.5" fill="#FDC51A"/>
+        <circle cx="29" cy="43" r="5" fill="#0A1F3D"/>
+      </svg>
+      <span class="wm notranslate" translate="no">GoRolli</span>
+    </a>
+    <div class="topnav">
+      <a class="hosttop" href="https://host.gorolli.com?lang=et">Sul on haagis? Teeni &rarr;</a>
+      <a class="langtop" href="#keeled">32 keelt</a>
+    </div>
+  </nav></div>
+</header>
+
+<!-- ============ HERO: demand-first Finder ============ -->
+<section class="finder wrap" id="finder">
+  <div>
+    <!-- I18N ADD: ids + notranslate on first-screen strings; GR_I18N serves these natively in all 32 languages, Google Translate must skip them -->
+    <h1 id="grH1" class="notranslate" translate="no">Leia haagis l&auml;hedalt.</h1>
+    <p class="lead notranslate" id="grLead" translate="no">Kolimine, ehitus, paat v&otilde;i aiat&ouml;&ouml; &mdash; vahel on haagist lihtsalt vaja.</p>
+    <div class="search">
+      <div class="loc notranslate" translate="no">
+        <svg width="16" height="20" viewBox="0 0 16 20" aria-hidden="true"><path d="M8 19C8 19 15 12.5 15 8A7 7 0 1 0 1 8c0 4.5 7 11 7 11z" fill="none" stroke="#0A1F3D" stroke-width="2.2"/><circle cx="8" cy="8" r="2.6" fill="#0A1F3D"/></svg>
+        <span id="grCity" data-prefix="Sinu l&auml;hedal">Sinu l&auml;hedal &mdash; Eesti</span>
+        <span class="approx" id="grApprox">Ligikaudne</span>
+      </div>
+      <a class="go" id="grFindCta" href="https://client.gorolli.com?lang=et"><span id="grCtaTx" class="notranslate" translate="no">N&auml;ita haagiseid</span>
+        <svg width="18" height="14" viewBox="0 0 18 14" aria-hidden="true"><path d="M1 7h14M10 2l6 5-6 5" fill="none" stroke="#1a1300" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <p class="noapp notranslate" id="grNoApp" translate="no">&Auml;ppi pole vaja &middot; Broneeri minutitega</p>
+    <a class="hostline notranslate" id="grHostLine" translate="no" href="https://host.gorolli.com?lang=et">Sul on haagis? <b>Pane see teenima &rarr;</b></a>
+  </div>
+  <div class="mappanel" id="mapPanel">
+    <svg class="mapart" viewBox="0 0 640 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <rect width="640" height="460" fill="#E9ECE3"/>
+      <path d="M-20 90 C 160 60, 240 160, 420 130 S 660 180, 700 160" fill="none" stroke="#F7F5EF" stroke-width="13"/>
+      <path d="M120 -20 C 150 130, 90 240, 180 340 S 240 440, 220 480" fill="none" stroke="#F7F5EF" stroke-width="9"/>
+      <path d="M-20 280 C 200 255, 340 310, 660 275" fill="none" stroke="#F7F5EF" stroke-width="7"/>
+      <path d="M340 -20 C 380 110, 470 200, 430 330 S 500 440, 480 480" fill="none" stroke="#F7F5EF" stroke-width="5"/>
+      <ellipse cx="520" cy="370" rx="140" ry="85" fill="#DEE5D6"/>
+      <path d="M640 40 C 570 90, 595 180, 660 210 L 660 20 Z" fill="#DAE3DF"/>
+      <circle cx="170" cy="140" r="8" fill="#0A1F3D" stroke="#fff" stroke-width="3"/>
+      <circle cx="360" cy="230" r="8" fill="#0A1F3D" stroke="#fff" stroke-width="3"/>
+      <circle cx="255" cy="330" r="8" fill="#0A1F3D" stroke="#fff" stroke-width="3"/>
+    </svg>
+    <span class="tag">Illustratiivne eelvaade</span>
+    <span class="note">P&auml;ris kaart avaneb otsingus</span>
+  </div>
+</section>
+
+<!-- ============ proof band ============ -->
+<section class="band">
+  <div class="wrap"><span>32 keeles</span><span>130+ turgu</span><span>Saadaval 175 riigis</span><span>Kliendi ja hosti &auml;pp &middot; t&ouml;&ouml;tab ka veebis</span></div>
+</section>
+
+<!-- ============ how it works ============ -->
+<section class="how wrap" id="kuidas">
+  <h2>Kuidas see t&ouml;&ouml;tab</h2>
+  <div class="steps">
+    <div class="step"><div class="n">1 &middot; Leia l&auml;hedalt</div><p>Vali sobiv haagis kaardilt.</p></div>
+    <div class="step"><div class="n">2 &middot; Broneeri minutitega</div><p>Selge hind enne maksmist.</p></div>
+    <div class="step"><div class="n">3 &middot; Haagi k&uuml;lge ja s&otilde;ida</div><p>Maksed ja arved k&auml;ivad &auml;pis.</p></div>
+  </div>
+</section>
+
+<!-- ============ host: secondary but unmissable ============ -->
+<section class="hostsec wrap" id="host">
+  <div class="in">
+    <div class="grow">
+      <div class="eyebrow">OMAD HAAGIST?</div>
+      <h2>Las ta teenib, kui niisama seisab.</h2>
+      <p>Sina m&auml;&auml;rad hinna ja saadavuse. Tasu laekub iga broneeringu eest.</p>
+    </div>
+    <div>
+      <a class="hostbtn" href="https://host.gorolli.com?lang=et">Pane haagis v&auml;lja</a>
+      <span class="apphint">Hosti &auml;pp Androidile ja iOS-ile &mdash; vaata altpoolt.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ apps: both apps, all links preserved ============ -->
+<section class="apps wrap" id="apid">
+  <h2>Kaks &auml;ppi &mdash; v&otilde;i kasuta veebis</h2>
+  <!-- FLOW: app is a convenience, not the gate — search starts in the browser -->
+  <p class="leadsm">Kasutad GoRollit tihti? &Auml;piga on j&auml;rgmine kord kiirem &mdash; veebis saab alustada kohe.</p>
+  <div class="appgrid">
+
+    <div class="appcard">
+      <h3>Kliendi &auml;pp &mdash; leia ja broneeri</h3>
+      <div class="stores">
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.mycompany.Hotelio&amp;hl=et" target="_blank" rel="noopener" title="Lae KLIENDI app Google Play'st">
+          <svg viewBox="0 0 24 24"><path fill="#00C3FF" d="M3.6 2.4c-.3.2-.5.6-.5 1v17.2c0 .4.2.8.5 1l9.5-9.6z"/><path fill="#FFCE00" d="M16.8 8.3 13.1 12l3.7 3.7 4.4-2.5c.9-.5.9-1.9 0-2.4z"/><path fill="#00F076" d="M3.6 2.4 13.1 12l3.7-3.7L6 2.1c-.9-.5-1.8-.3-2.4.3z"/><path fill="#FF3A44" d="M3.6 21.6c.6.6 1.5.8 2.4.3l10.8-6.2L13.1 12z"/></svg>
+          <span class="tx"><small>Saadaval</small><b>Google Play</b></span>
+        </a>
+      </div>
+      <a class="webbtn" href="https://client.gorolli.com?lang=et" title="Ava kliendi app veebis">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0A1F3D" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>
+        Ava veebis &mdash; ilma allalaadimiseta
+      </a>
+    </div>
+
+    <div class="appcard">
+      <h3>Hosti &auml;pp &mdash; pane v&auml;lja ja teeni</h3>
+      <div class="stores">
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.mycompany.gorollihostapp&amp;hl=et" target="_blank" rel="noopener" title="Lae HOSTI app Google Play'st">
+          <svg viewBox="0 0 24 24"><path fill="#00C3FF" d="M3.6 2.4c-.3.2-.5.6-.5 1v17.2c0 .4.2.8.5 1l9.5-9.6z"/><path fill="#FFCE00" d="M16.8 8.3 13.1 12l3.7 3.7 4.4-2.5c.9-.5.9-1.9 0-2.4z"/><path fill="#00F076" d="M3.6 2.4 13.1 12l3.7-3.7L6 2.1c-.9-.5-1.8-.3-2.4.3z"/><path fill="#FF3A44" d="M3.6 21.6c.6.6 1.5.8 2.4.3l10.8-6.2L13.1 12z"/></svg>
+          <span class="tx"><small>Saadaval</small><b>Google Play</b></span>
+        </a>
+      </div>
+      <a class="webbtn" href="https://host.gorolli.com?lang=et" title="Ava hosti app veebis">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0A1F3D" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>
+        Ava veebis &mdash; ilma allalaadimiseta
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ trust ============ -->
+<section class="trust">
+  <div class="wrap">
+    <span><svg width="16" height="13" viewBox="0 0 16 13" aria-hidden="true"><path d="M2 7l4 4 8-9" fill="none" stroke="#1E8A4C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Hind on n&auml;ha enne broneerimist</span>
+    <span><svg width="16" height="13" viewBox="0 0 16 13" aria-hidden="true"><path d="M2 7l4 4 8-9" fill="none" stroke="#1E8A4C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Turvaline makse &auml;pis</span>
+    <span><svg width="16" height="13" viewBox="0 0 16 13" aria-hidden="true"><path d="M2 7l4 4 8-9" fill="none" stroke="#1E8A4C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Tugi 32 keeles</span>
+  </div>
+</section>
+
+<!-- ============ videos: click-to-play only, below the fold ============ -->
+<section class="news" id="videod">
+  <div class="wrap">
+    <h2>Vaata l&auml;hemalt</h2>
+    <p class="leadsm">Kaks l&uuml;hikest videot &mdash; k&auml;ivituvad ainult klikiga.</p>
+    <div class="ngrid">
+      <div class="ncard video" onclick="openVideo(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openVideo(this)}" data-src="gorolli-reklaamvideo.mp4" role="button" tabindex="0" aria-label="Esita: GoRolli tutvustus">
+        <div class="th" style="background:#0A1F3D url('gorolli-video-poster.jpg') center/cover"><span class="playbtn"></span></div>
+        <div class="b"><span class="badge">VIDEO</span><h4>GoRolli tutvustus</h4><p>Mis on GoRolli ja kuidas see t&ouml;&ouml;tab &mdash; l&uuml;hidalt.</p></div>
+      </div>
+      <div class="ncard video" onclick="openVideo(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openVideo(this)}" data-src="video/gorolli-juhend.mp4" role="button" tabindex="0" aria-label="Esita: kuidas haagist &uuml;hendada">
+        <div class="th" style="background:#0A1F3D url('video/juhend-poster.jpg') center/cover"><span class="playbtn"></span></div>
+        <div class="b"><span class="badge">&Otilde;PPEVIDEO</span><h4>Kuidas haagist &uuml;hendada</h4><p>Samm-sammult: kuidas haagis turvaliselt auto k&uuml;lge &uuml;hendada &mdash; haakeseade, ohutuskett ja tuled.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="langwrap" id="keeled">
+      <div class="langhead notranslate" id="grLangHead" translate="no">Vali keel &middot; 32</div>
+      <!-- RESPONSIVE/A11Y: pills are real <button>s (keyboard + screen reader), group labelled by the localized heading. Same .lpill class + data-l — the preserved language JS is selector-based and unaffected. -->
+      <div class="langbar notranslate" id="langbar" translate="no" role="group" aria-labelledby="grLangHead">
+        <button type="button" class="lpill" data-l="en" lang="en">EN</button>
+        <button type="button" class="lpill" data-l="et" lang="et">EE</button>
+        <button type="button" class="lpill" data-l="de" lang="de">DE</button>
+        <button type="button" class="lpill" data-l="pl" lang="pl">PL</button>
+        <button type="button" class="lpill" data-l="lv" lang="lv">LV</button>
+        <button type="button" class="lpill" data-l="fi" lang="fi">FI</button>
+        <button type="button" class="lpill" data-l="lt" lang="lt">LT</button>
+        <button type="button" class="lpill" data-l="ru" lang="ru">RU</button>
+        <button type="button" class="lpill" data-l="sv" lang="sv">SE</button>
+        <button type="button" class="lpill" data-l="da" lang="da">DK</button>
+        <button type="button" class="lpill" data-l="uk" lang="uk">UA</button>
+        <button type="button" class="lpill" data-l="es" lang="es">ES</button>
+        <button type="button" class="lpill" data-l="fr" lang="fr">FR</button>
+        <button type="button" class="lpill" data-l="it" lang="it">IT</button>
+        <button type="button" class="lpill" data-l="nl" lang="nl">NL</button>
+        <button type="button" class="lpill" data-l="pt" lang="pt">PT</button>
+        <button type="button" class="lpill" data-l="cs" lang="cs">CZ</button>
+        <button type="button" class="lpill" data-l="sk" lang="sk">SK</button>
+        <button type="button" class="lpill" data-l="hu" lang="hu">HU</button>
+        <button type="button" class="lpill" data-l="ro" lang="ro">RO</button>
+        <button type="button" class="lpill" data-l="bg" lang="bg">BG</button>
+        <button type="button" class="lpill" data-l="tr" lang="tr">TR</button>
+        <button type="button" class="lpill" data-l="el" lang="el">GR</button>
+        <button type="button" class="lpill" data-l="hr" lang="hr">HR</button>
+        <button type="button" class="lpill" data-l="sl" lang="sl">SI</button>
+        <button type="button" class="lpill" data-l="sr" lang="sr">RS</button>
+        <button type="button" class="lpill" data-l="ar" lang="ar">AR</button>
+        <button type="button" class="lpill" data-l="he" lang="he">HE</button>
+        <button type="button" class="lpill" data-l="hi" lang="hi">HI</button>
+        <button type="button" class="lpill" data-l="zh" lang="zh">ZH</button>
+        <button type="button" class="lpill" data-l="ja" lang="ja">JA</button>
+        <button type="button" class="lpill" data-l="ko" lang="ko">KO</button>
+      </div>
+    </div>
+    <div class="fgrid">
+      <div class="logo">
+        <svg class="mark" viewBox="0 0 66 58" style="width:28px" aria-hidden="true">
+          <path fill="#FDC51A" d="M16 31 C14 21 20 13 30 13 L45 13 C54 13 61 20 61 30 C61 36 57 41 51 41 L20 41 C18 41 16 37 16 31 Z"/>
+          <circle cx="29" cy="43" r="13.5" fill="#FDC51A"/>
+          <circle cx="29" cy="43" r="5" fill="#0A1F3D"/>
+        </svg>
+        <span class="wm notranslate" translate="no" style="font-size:18px">GoRolli</span>
+      </div>
+      <div>&copy; 2026 GoRolli &middot; <a href="/terms">Teenusetingimused</a> &middot; <a href="/privacy">Privaatsus</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* Feature flag: live map on the homepage. false = the map stays a labeled illustrative
+     preview and the primary CTA is a plain link to client.gorolli.com (real search).
+     Flip to true ONLY when the public inventory API exists: /api/public/trailers/nearby —
+     contract in public-live-map-plan.md (supersedes the old /api/home/nearby note). Never fake pins. */
+  var GOROLLI_FLAGS = { live_map: false };
+</script>
+
+<script>
+  /* Click-to-play video (no autoplay before the click; generalized to data-src) */
+  function openVideo(card){
+    var th=card.querySelector('.th');
+    if(th.querySelector('video'))return;
+    var src=card.getAttribute('data-src');
+    th.innerHTML='<video src="'+src+'" controls autoplay playsinline style="width:100%;height:100%;object-fit:cover;background:#000;display:block"></video>';
+  }
+</script>
+
+<script>
+  /* ============ Finder state machine — runs ONLY when live_map=true ============
+     States: tap CTA -> geolocation ask -> granted: fetch nearby summary (approx pins only)
+             denied/error: manual city search -> count 0: wider area + honest host invite.
+     With live_map=false none of this runs and the CTA stays a plain link (works without JS). */
+  (function(){
+    if(!GOROLLI_FLAGS.live_map) return;
+    var API='/api/public/trailers/nearby'; /* TODO backend: contract in public-live-map-plan.md — its summary fields (count, min_price, nearest_km) keep this machine working as-is; trailers[] powers the Phase-3 Map Lite */
+    var cta=document.getElementById('grFindCta');
+    var panel=document.getElementById('mapPanel');
+    if(!cta||!panel) return;
+    function curLang(){ var m=cta.href.match(/[?&]lang=([a-zA-Z\-]+)/); return (m&&m[1])||'et'; }
+    /* FLOW: homepage = finder, client web = real search, app = retention. The CTA must always land on
+       client web search, never on an app store. When client web ships a public map/search route, set
+       GR_FIND_PATH='/find' (also update grAppLinks + the static hero CTAs — see REDESIGN-NOTES flow addendum).
+       Until then the app root IS the closest existing search screen. */
+    var GR_FIND_PATH='';
+    function clientUrl(){ return 'https://client.gorolli.com'+GR_FIND_PATH+'?lang='+curLang(); }
+    function state(html){ var s=panel.querySelector('.mstate'); if(!s){ s=document.createElement('div'); s.className='mstate'; panel.appendChild(s);} s.innerHTML=html; return s; }
+    function showLoading(){ state('<h3>Otsin haagiseid&hellip;</h3><p>Kasutame ligikaudset asukohta.</p>'); }
+    function showManual(msg){
+      var s=state((msg?'<p>'+msg+'</p>':'')+
+        '<input class="minput" id="grCityIn" type="text" placeholder="Sisesta linn v&otilde;i aadress">'+
+        '<a class="go" id="grManualGo" href="'+clientUrl()+'">N&auml;ita haagiseid</a>');
+      var b=s.querySelector('#grManualGo'), i=s.querySelector('#grCityIn');
+      i.focus();
+      b.addEventListener('click',function(){ if(i.value){ b.href=clientUrl()+'&city='+encodeURIComponent(i.value); } }); /* FLOW: GPS denied -> city search on client web */
+    }
+    function showEmpty(pos){
+      var s=state('<h3>Siin pole veel haagiseid.</h3><p>Proovi laiemat ala &mdash; v&otilde;i l&auml;himat linna.</p>'+
+        '<a class="go" id="grWider" href="'+clientUrl()+'">Otsi laiemalt &middot; 25 km</a>'+
+        '<div class="mhost"><b>Sul on haagis? Ole selles piirkonnas esimene.</b><br>'+
+        '<a href="https://host.gorolli.com?lang='+curLang()+'">Pane haagis v&auml;lja &rarr;</a></div>');
+      var w=s.querySelector('#grWider');
+      w.addEventListener('click',function(e){ if(pos){ e.preventDefault(); query(pos,25000); } });
+    }
+    function showResult(d,pos){
+      var from=(d.min_price&&d.min_price.amount)?(' &middot; alates '+d.min_price.amount+'&nbsp;'+(d.min_price.currency||'&euro;')+'/h'):'';
+      var near=(d.nearest_km!=null)?('L&auml;him &asymp; '+d.nearest_km+' km &middot; '):'';
+      /* FLOW: GPS granted -> full search opens with coarse coords so client web centers the real map */
+      var loc=(pos)?('&lat='+pos.coords.latitude.toFixed(3)+'&lng='+pos.coords.longitude.toFixed(3)):'';
+      state('<h3>'+d.count+' haagist l&auml;hedal'+from+'</h3><p>'+near+'Asukohad on ligikaudsed &mdash; t&auml;pne aadress p&auml;rast broneeringut.</p>'+
+        '<a class="go" href="'+clientUrl()+loc+'">Ava t&auml;isotsing</a>');
+    }
+    function query(pos,r){
+      showLoading();
+      fetch(API+'?lat='+pos.coords.latitude.toFixed(3)+'&lng='+pos.coords.longitude.toFixed(3)+'&r='+(r||5000))
+        .then(function(x){return x.json();})
+        .then(function(d){ if(!d || !d.count){ showEmpty(pos); } else { showResult(d,pos); } })
+        .catch(function(){ location.href=clientUrl(); }); /* API down -> real search, never a dead page */
+    }
+    cta.addEventListener('click',function(e){
+      e.preventDefault();
+      if(!navigator.geolocation){ location.href=clientUrl(); return; }
+      showLoading();
+      navigator.geolocation.getCurrentPosition(
+        function(pos){ query(pos,5000); },
+        function(){ showManual('Asukoht on v&auml;lja l&uuml;litatud &mdash; otsi linna j&auml;rgi.'); },
+        {timeout:8000, maximumAge:600000}
+      );
+    });
+  })();
+</script>
+
+<script>
+  /* ============ I18N ADD (this whole block is new): instant first-screen dictionary, 32 languages ============
+     Runs BEFORE Google Translate: the elements below are marked notranslate, so GT never touches them and
+     never double-translates. Everything NOT in this dictionary keeps the preserved Google Translate fallback.
+     Full vocabulary (GPS states, host section, trust, how-it-works, videos) lives in /i18n/finder-strings.json —
+     wire those through this same mechanism when live_map goes true. Keys: h1, lead, near, approx, cta, noapp, host, lang. */
+  var GR_I18N={
+  en:{h1:"Find a trailer nearby.",lead:"Moving, building, boats or garden work — real life sometimes needs one.",near:"Near you",approx:"Approximate",cta:"Show trailers",noapp:"No app needed · Book in minutes",host:"Have a trailer? <b>Earn with it →</b>",lang:"Choose language"},
+  et:{h1:"Leia haagis lähedalt.",lead:"Kolimine, ehitus, paat või aiatöö — vahel on haagist lihtsalt vaja.",near:"Sinu lähedal",approx:"Ligikaudne",cta:"Näita haagiseid",noapp:"Äppi pole vaja · Broneeri minutitega",host:"Sul on haagis? <b>Pane see teenima →</b>",lang:"Vali keel"},
+  de:{h1:"Anhänger in der Nähe finden.",lead:"Umzug, Bau, Boot oder Garten — manchmal braucht man einfach einen.",near:"In Ihrer Nähe",approx:"Ungefähr",cta:"Anhänger anzeigen",noapp:"Keine App nötig · In Minuten gebucht",host:"Sie haben einen Anhänger? <b>Verdienen Sie damit →</b>",lang:"Sprache wählen"},
+  pl:{h1:"Znajdź przyczepę w pobliżu.",lead:"Przeprowadzka, budowa, łódź czy ogród — czasem przyczepa jest po prostu potrzebna.",near:"W pobliżu",approx:"Orientacyjnie",cta:"Pokaż przyczepy",noapp:"Bez aplikacji · Rezerwacja w kilka minut",host:"Masz przyczepę? <b>Zarabiaj na niej →</b>",lang:"Wybierz język"},
+  lv:{h1:"Atrodi piekabi tuvumā.",lead:"Pārvākšanās, būvniecība, laiva vai dārza darbi — dažreiz piekabe ir vienkārši vajadzīga.",near:"Tavā tuvumā",approx:"Aptuveni",cta:"Rādīt piekabes",noapp:"Lietotne nav vajadzīga · Rezervē minūtēs",host:"Tev ir piekabe? <b>Pelni ar to →</b>",lang:"Izvēlies valodu"},
+  fi:{h1:"Löydä peräkärry läheltä.",lead:"Muutto, rakentaminen, vene tai pihatyöt — joskus kärryä vain tarvitaan.",near:"Lähelläsi",approx:"Suuntaa-antava",cta:"Näytä peräkärryt",noapp:"Ei sovellusta tarvita · Varaa minuuteissa",host:"Onko sinulla peräkärry? <b>Ansaitse sillä →</b>",lang:"Valitse kieli"},
+  lt:{h1:"Rask priekabą netoliese.",lead:"Kraustymasis, statybos, valtis ar sodo darbai — kartais priekabos tiesiog reikia.",near:"Netoli jūsų",approx:"Apytiksliai",cta:"Rodyti priekabas",noapp:"Programėlės nereikia · Rezervuok per minutes",host:"Turi priekabą? <b>Uždirbk su ja →</b>",lang:"Pasirink kalbą"},
+  ru:{h1:"Найдите прицеп рядом.",lead:"Переезд, стройка, лодка или сад — иногда прицеп просто нужен.",near:"Рядом с вами",approx:"Примерно",cta:"Показать прицепы",noapp:"Приложение не нужно · Бронь за минуты",host:"Есть прицеп? <b>Зарабатывайте на нём →</b>",lang:"Выберите язык"},
+  sv:{h1:"Hitta ett släp nära dig.",lead:"Flytt, bygge, båt eller trädgård — ibland behövs helt enkelt ett släp.",near:"Nära dig",approx:"Ungefärlig",cta:"Visa släp",noapp:"Ingen app behövs · Boka på minuter",host:"Har du ett släp? <b>Tjäna på det →</b>",lang:"Välj språk"},
+  da:{h1:"Find en trailer i nærheden.",lead:"Flytning, byggeri, båd eller have — nogle gange skal der bare en trailer til.",near:"Nær dig",approx:"Omtrentlig",cta:"Vis trailere",noapp:"Ingen app nødvendig · Book på minutter",host:"Har du en trailer? <b>Tjen på den →</b>",lang:"Vælg sprog"},
+  uk:{h1:"Знайдіть причіп поруч.",lead:"Переїзд, будівництво, човен чи сад — інколи причіп просто потрібен.",near:"Поруч із вами",approx:"Приблизно",cta:"Показати причепи",noapp:"Застосунок не потрібен · Бронювання за хвилини",host:"Маєте причіп? <b>Заробляйте на ньому →</b>",lang:"Оберіть мову"},
+  es:{h1:"Encuentra un remolque cerca.",lead:"Mudanza, obra, barco o jardín — a veces simplemente hace falta uno.",near:"Cerca de ti",approx:"Aproximado",cta:"Ver remolques",noapp:"Sin app · Reserva en minutos",host:"¿Tienes un remolque? <b>Gana con él →</b>",lang:"Elige idioma"},
+  fr:{h1:"Trouvez une remorque près de chez vous.",lead:"Déménagement, chantier, bateau ou jardin — parfois il en faut une, tout simplement.",near:"Près de vous",approx:"Approximatif",cta:"Voir les remorques",noapp:"Sans appli · Réservation en quelques minutes",host:"Vous avez une remorque ? <b>Gagnez avec →</b>",lang:"Choisir la langue"},
+  it:{h1:"Trova un rimorchio vicino a te.",lead:"Trasloco, cantiere, barca o giardino — a volte serve, semplicemente.",near:"Vicino a te",approx:"Approssimativo",cta:"Mostra rimorchi",noapp:"Niente app · Prenoti in pochi minuti",host:"Hai un rimorchio? <b>Guadagnaci →</b>",lang:"Scegli la lingua"},
+  nl:{h1:"Vind een aanhanger in de buurt.",lead:"Verhuizen, klussen, boot of tuin — soms heb je er gewoon één nodig.",near:"Bij jou in de buurt",approx:"Bij benadering",cta:"Toon aanhangers",noapp:"Geen app nodig · Boek in minuten",host:"Heb je een aanhanger? <b>Verdien ermee →</b>",lang:"Kies taal"},
+  pt:{h1:"Encontre um reboque por perto.",lead:"Mudanças, obras, barco ou jardim — às vezes é mesmo preciso um.",near:"Por perto",approx:"Aproximado",cta:"Mostrar reboques",noapp:"Sem app · Reserve em minutos",host:"Tem um reboque? <b>Ganhe com ele →</b>",lang:"Escolha o idioma"},
+  cs:{h1:"Najděte přívěs poblíž.",lead:"Stěhování, stavba, loď nebo zahrada — někdy je přívěs prostě potřeba.",near:"Ve vašem okolí",approx:"Přibližně",cta:"Zobrazit přívěsy",noapp:"Bez aplikace · Rezervace za pár minut",host:"Máte přívěs? <b>Vydělávejte s ním →</b>",lang:"Zvolte jazyk"},
+  sk:{h1:"Nájdite príves v okolí.",lead:"Sťahovanie, stavba, loď či záhrada — niekedy je príves jednoducho potrebný.",near:"Vo vašom okolí",approx:"Približne",cta:"Zobraziť prívesy",noapp:"Bez aplikácie · Rezervácia za pár minút",host:"Máte príves? <b>Zarábajte s ním →</b>",lang:"Zvoľte jazyk"},
+  hu:{h1:"Találj utánfutót a közelben.",lead:"Költözés, építkezés, csónak vagy kert — néha egyszerűen kell egy utánfutó.",near:"A közeledben",approx:"Hozzávetőleges",cta:"Utánfutók mutatása",noapp:"Nem kell app · Foglalás percek alatt",host:"Van utánfutód? <b>Keress vele →</b>",lang:"Válassz nyelvet"},
+  ro:{h1:"Găsește o remorcă în apropiere.",lead:"Mutare, construcții, barcă sau grădină — uneori pur și simplu ai nevoie de una.",near:"Lângă tine",approx:"Aproximativ",cta:"Arată remorcile",noapp:"Fără aplicație · Rezervi în câteva minute",host:"Ai o remorcă? <b>Câștigă cu ea →</b>",lang:"Alege limba"},
+  bg:{h1:"Намери ремарке наблизо.",lead:"Преместване, строеж, лодка или градина — понякога просто ти трябва ремарке.",near:"Близо до теб",approx:"Приблизително",cta:"Покажи ремаркетата",noapp:"Без приложение · Резервация за минути",host:"Имаш ремарке? <b>Печели с него →</b>",lang:"Избери език"},
+  tr:{h1:"Yakınında bir römork bul.",lead:"Taşınma, inşaat, tekne ya da bahçe — bazen römork gerekir işte.",near:"Yakınınızda",approx:"Yaklaşık",cta:"Römorkları göster",noapp:"Uygulama gerekmez · Dakikalar içinde rezervasyon",host:"Römorkun mu var? <b>Onunla kazan →</b>",lang:"Dil seçin"},
+  el:{h1:"Βρες τρέιλερ κοντά σου.",lead:"Μετακόμιση, οικοδομή, σκάφος ή κήπος — καμιά φορά απλώς χρειάζεσαι ένα.",near:"Κοντά σου",approx:"Κατά προσέγγιση",cta:"Εμφάνιση τρέιλερ",noapp:"Χωρίς εφαρμογή · Κράτηση σε λίγα λεπτά",host:"Έχεις τρέιλερ; <b>Κέρδισε με αυτό →</b>",lang:"Επίλεξε γλώσσα"},
+  hr:{h1:"Pronađi prikolicu u blizini.",lead:"Selidba, gradnja, brod ili vrt — ponekad prikolica jednostavno zatreba.",near:"U tvojoj blizini",approx:"Približno",cta:"Prikaži prikolice",noapp:"Bez aplikacije · Rezervacija u par minuta",host:"Imaš prikolicu? <b>Zaradi s njom →</b>",lang:"Odaberi jezik"},
+  sl:{h1:"Najdi prikolico v bližini.",lead:"Selitev, gradnja, čoln ali vrt — včasih prikolico preprosto potrebuješ.",near:"V tvoji bližini",approx:"Približno",cta:"Pokaži prikolice",noapp:"Brez aplikacije · Rezervacija v nekaj minutah",host:"Imaš prikolico? <b>Zasluži z njo →</b>",lang:"Izberi jezik"},
+  sr:{h1:"Пронађи приколицу у близини.",lead:"Селидба, градња, чамац или башта — понекад приколица једноставно затреба.",near:"У твојој близини",approx:"Приближно",cta:"Прикажи приколице",noapp:"Без апликације · Резервација за пар минута",host:"Имаш приколицу? <b>Заради с њом →</b>",lang:"Изабери језик"},
+  ar:{h1:"اعثر على مقطورة قريبة منك.",lead:"نقل، بناء، قارب أو حديقة — أحيانًا تحتاج ببساطة إلى مقطورة.",near:"بالقرب منك",approx:"تقريبي",cta:"عرض المقطورات",noapp:"لا حاجة لتطبيق · احجز في دقائق",host:"لديك مقطورة؟ <b>اربح بها ←</b>",lang:"اختر اللغة"},
+  he:{h1:"מצאו נגרר קרוב אליכם.",lead:"מעבר דירה, בנייה, סירה או גינה — לפעמים פשוט צריך נגרר.",near:"קרוב אליכם",approx:"משוער",cta:"הצגת נגררים",noapp:"בלי אפליקציה · הזמנה בדקות",host:"יש לכם נגרר? <b>הרוויחו איתו ←</b>",lang:"בחרו שפה"},
+  hi:{h1:"पास में ट्रेलर ढूंढें।",lead:"शिफ्टिंग, निर्माण, नाव या बगीचा — कभी-कभी ट्रेलर की बस ज़रूरत होती है।",near:"आपके पास",approx:"अनुमानित",cta:"ट्रेलर दिखाएं",noapp:"ऐप ज़रूरी नहीं · मिनटों में बुक करें",host:"आपके पास ट्रेलर है? <b>उससे कमाएं →</b>",lang:"भाषा चुनें"},
+  zh:{h1:"在附近找一辆拖车。",lead:"搬家、装修、运船或园艺——有时就是需要一辆拖车。",near:"你附近",approx:"大致位置",cta:"查看拖车",noapp:"无需安装应用 · 几分钟完成预订",host:"有拖车？<b>用它赚钱 →</b>",lang:"选择语言"},
+  ja:{h1:"近くのトレーラーを探そう。",lead:"引っ越し、工事、ボートや庭仕事——トレーラーが必要になる時があります。",near:"あなたの近く",approx:"おおよそ",cta:"トレーラーを表示",noapp:"アプリ不要 · 数分で予約",host:"トレーラーをお持ちですか？<b>貸して稼ぐ →</b>",lang:"言語を選択"},
+  ko:{h1:"가까운 트레일러를 찾아보세요.",lead:"이사, 공사, 보트나 정원 일 — 트레일러가 꼭 필요할 때가 있죠.",near:"내 주변",approx:"대략적",cta:"트레일러 보기",noapp:"앱 설치 불필요 · 몇 분 만에 예약",host:"트레일러가 있나요? <b>수익을 올려보세요 →</b>",lang:"언어 선택"}
+  };
+  var GR_PLAY_LANG={he:'iw',zh:'zh-CN'}; // Google Play hl codes that differ from ours (same mapping style as Google Translate)
+  var grCityKnown=''; // set by the existing ipapi callback; used to render "near — city"
+  function grPlayLinks(lang){ // append/refresh &hl= on both Play store links; never touches the package ids
+    var hl=GR_PLAY_LANG[lang]||lang;
+    document.querySelectorAll('a[href^="https://play.google.com/store/apps/details"]').forEach(function(a){
+      var m=a.getAttribute('href').match(/id=([A-Za-z0-9._]+)/);
+      if(m){ a.href='https://play.google.com/store/apps/details?id='+m[1]+'&hl='+hl; }
+    });
+  }
+  function grApplyI18n(lang){
+    var t=GR_I18N[lang]||GR_I18N.en;
+    function tx(id,v){var e=document.getElementById(id);if(e&&v)e.textContent=v;}
+    tx('grH1',t.h1);tx('grLead',t.lead);tx('grCtaTx',t.cta);tx('grNoApp',t.noapp);tx('grApprox',t.approx);
+    var h=document.getElementById('grHostLine');if(h&&t.host)h.innerHTML=t.host;
+    var L=document.getElementById('grLangHead');if(L&&t.lang)L.textContent=t.lang+' · 32';
+    var ce=document.getElementById('grCity');
+    if(ce&&t.near){
+      ce.setAttribute('data-prefix',t.near);
+      if(grCityKnown){ ce.textContent=t.near+' — '+grCityKnown; }
+      else if(lang!=='et'){ ce.textContent=t.near; } /* et without a detected city keeps the static default */
+    }
+  }
+</script>
+
+<script>
+  /* ============ PRESERVED VERBATIM: 32-language system, country detection, ?lang= app links,
+     Google Translate in-place translation, Estonian restore, anti-banner watchdog.
+     Only marked "REDESIGN ADD" lines are new. Do not edit without testing the full checklist. */
+  var SUPPORTED=['en','et','de','pl','lv','fi','lt','ru','sv','da','uk','es','fr','it','nl','pt','cs','sk','hu','ro','bg','tr','el','hr','sl','sr','ar','he','hi','zh','ja','ko'];
+  // country -> language (only for supported languages; everything else falls back to English)
+  var C2L={EE:'et',FI:'fi',LV:'lv',LT:'lt',DE:'de',AT:'de',CH:'de',LI:'de',PL:'pl',
+    RU:'ru',BY:'ru',KZ:'ru',KG:'ru',SE:'sv',DK:'da',NL:'nl',BE:'fr',
+    FR:'fr',LU:'fr',MC:'fr',ES:'es',MX:'es',AR:'es',CO:'es',CL:'es',PE:'es',VE:'es',
+    IT:'it',SM:'it',PT:'pt',BR:'pt',AO:'pt',MZ:'pt',CZ:'cs',SK:'sk',HU:'hu',
+    RO:'ro',MD:'ro',BG:'bg',HR:'hr',SI:'sl',GR:'el',CY:'el',UA:'uk',TR:'tr',
+    RS:'sr',BA:'sr',ME:'sr',IL:'he',IN:'hi',CN:'zh',HK:'zh',TW:'zh',SG:'zh',
+    JP:'ja',KR:'ko',SA:'ar',AE:'ar',EG:'ar',MA:'ar'};
+
+  function grHi(lang){var p=document.querySelector('.lpill[data-l="'+lang+'"]');if(p){document.querySelectorAll('.lpill').forEach(function(x){x.classList.remove('on');});p.classList.add('on');}}
+  // translate in place via Google combo (NO page reload -> can never loop)
+  function grTranslateCode(lang){
+    if(lang==='he') return 'iw';
+    if(lang==='zh') return 'zh-CN';
+    return lang;
+  }
+  function grCombo(lang,n){
+    var c=document.querySelector('.goog-te-combo');
+    if(c){ c.value=grTranslateCode(lang); c.dispatchEvent(new Event('change',{bubbles:true})); }
+    else if((n||0)<80){ setTimeout(function(){grCombo(lang,(n||0)+1);},200); }
+  }
+  function grRestore(){ // back to original Estonian WITHOUT reload (mobile-safe)
+    var base=location.hostname.replace(/^www\./,'');
+    var del='googtrans=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
+    document.cookie=del;
+    document.cookie=del+';domain='+location.hostname;
+    document.cookie=del+';domain=.'+base;
+    var c=document.querySelector('.goog-te-combo');
+    if(c){ c.value=''; c.dispatchEvent(new Event('change',{bubbles:true})); }
+  }
+  function grAppLinks(lang){
+    document.querySelectorAll('a[href^="https://client.gorolli.com"]').forEach(function(a){a.href='https://client.gorolli.com?lang='+lang;});
+    document.querySelectorAll('a[href^="https://host.gorolli.com"]').forEach(function(a){a.href='https://host.gorolli.com?lang='+lang;});
+  }
+  function grSet(lang){
+    if(SUPPORTED.indexOf(lang)<0) lang='en';
+    grHi(lang);
+    grAppLinks(lang);
+    grApplyI18n(lang); grPlayLinks(lang); /* I18N ADD: instant first-screen strings + Play hl= */
+    if(lang==='et'){ grRestore(); return; }
+    grCombo(lang,0);
+  }
+  // manual choice (remembered)
+  var lb=document.getElementById('langbar');
+  if(lb){
+    lb.querySelectorAll('.lpill').forEach(function(p){
+      p.addEventListener('click',function(){
+        try{localStorage.setItem('gr_lang',p.dataset.l);}catch(e){}
+        grSet(p.dataset.l);
+      });
+    });
+  }
+  // auto on load (NO reload): saved -> country -> browser -> English
+  (function(){
+    function go(lang){ if(SUPPORTED.indexOf(lang)<0) lang='en'; grHi(lang); grAppLinks(lang); grApplyI18n(lang); grPlayLinks(lang); /* I18N ADD */ if(lang!=='et') grCombo(lang,0); }
+    var saved=null; try{saved=localStorage.getItem('gr_lang');}catch(e){}
+    if(saved){ go(saved); return; }
+    function bl(){var n=(navigator.languages&&navigator.languages[0])||navigator.language||'en';return n.slice(0,2).toLowerCase();}
+    fetch('https://ipapi.co/json/').then(function(r){return r.json();}).then(function(d){
+      var cc=(d&&d.country_code)?d.country_code.toUpperCase():'';
+      /* REDESIGN ADD: reuse the SAME ipapi response to label the hero location ("Sinu lähedal — Tallinn").
+         Coarse city only, no extra request, fails silently. */
+      try{ if(d&&d.city){ grCityKnown=d.city; /* I18N ADD */ var ce=document.getElementById('grCity'); if(ce){ ce.textContent=ce.getAttribute('data-prefix')+' — '+d.city; } } }catch(e){}
+      go(C2L[cc]||bl());
+    }).catch(function(){ go(bl()); });
+  })();
+
+  // keep Google's translate top-banner hidden (it can reappear after each switch)
+  setInterval(function(){
+    document.querySelectorAll('.goog-te-banner-frame, iframe.skiptranslate').forEach(function(b){ b.style.display='none'; });
+    if(document.body && document.body.style.top!=='0px'){ document.body.style.top='0px'; }
+  },300);
+</script>
+
+<!-- Google Translate (translates the page in place into the chosen language) -->
+<div id="google_translate_element"></div>
+<script>
+  function googleTranslateElementInit(){
+    new google.translate.TranslateElement({pageLanguage:'et',autoDisplay:false},'google_translate_element');
+  }
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</body>
+</html>

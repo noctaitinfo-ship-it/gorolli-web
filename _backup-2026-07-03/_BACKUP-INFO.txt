@@ -1,0 +1,10 @@
+GoRolli gorolli-web FULL STATE BACKUP — 2026-07-03
+Contents = branch-ready working tree BEFORE the live-map build ("uus töö").
+Text files (index, en/et/de/fi/lv/lt/pl, REDESIGN-NOTES) captured from the authoritative
+disk view and cross-verified byte-identical via two independent routes.
+Includes: 8 HTML pages, notes, i18n/finder-strings.json (52 keys x 32 langs),
+client-web-find-requirements.md, public-live-map-plan.md, terms/privacy/robots/sitemap,
+favicon, posters, both mp4 videos, screenshots, original redesign zip.
+NOT included (not in this repo): FlutterFlow client/host apps (backup via FlutterFlow
+version snapshot / code export), Firebase data (export via Firebase console), git history (on GitHub).
+Restore: copy contents over the repo root.
