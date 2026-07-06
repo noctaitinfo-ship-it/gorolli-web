@@ -1,0 +1,28 @@
+﻿name: Deploy Web to Cloudflare Pages
+
+on:
+  push:
+    branches:
+      - main
+      - redesign/gorolli-finder-demand-first
+  workflow_dispatch:
+
+concurrency:
+  group: cloudflare-pages-gorolli-web
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy . --project-name=gorolli-web --branch=${{ github.ref_name }}
