@@ -55,6 +55,18 @@ function canonicalFor(locale, pathname) {
   return pathname === '/' ? `${SITE}/` : `${SITE}/${locale}`;
 }
 
+function escapeHtml(value) {
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('"', '&quot;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;');
+}
+
+function escapeScriptJson(value) {
+  return value.replaceAll('<', '\u003c');
+}
+
 class SetAttribute {
   constructor(name, value) {
     this.name = name;
@@ -71,21 +83,6 @@ class SetText {
   }
   element(element) {
     element.setInnerContent(this.value);
-  }
-}
-
-class PrependLocaleBootstrap {
-  constructor(locale, enabled) {
-    this.locale = locale;
-    this.enabled = enabled;
-  }
-  element(element) {
-    if (!this.enabled) return;
-    const code = JSON.stringify(this.locale);
-    element.prepend(
-      `<script>try{localStorage.setItem('gr_lang',${code})}catch(e){}</script>`,
-      { html: true }
-    );
   }
 }
 
@@ -107,6 +104,7 @@ class AppendLocalizedHead {
       isPartOf: { '@id': `${SITE}/#website` },
       about: { '@id': `${SITE}/#org` }
     };
+
     element.append(
       `<meta property="og:locale" content="${this.locale}">` +
       `<meta name="twitter:title" content="${escapeHtml(this.data.title)}">` +
@@ -115,18 +113,6 @@ class AppendLocalizedHead {
       { html: true }
     );
   }
-}
-
-function escapeHtml(value) {
-  return value
-    .replaceAll('&', '&amp;')
-    .replaceAll('"', '&quot;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;');
-}
-
-function escapeScriptJson(value) {
-  return value.replaceAll('<', '\u003c');
 }
 
 export default {
@@ -148,8 +134,7 @@ export default {
     const explicitLocale = url.pathname !== '/';
     const assetPath = explicitLocale ? `/${locale}.html` : '/index.html';
     const assetUrl = new URL(assetPath, url);
-    const assetRequest = new Request(assetUrl.toString(), request);
-    const assetResponse = await env.ASSETS.fetch(assetRequest);
+    const assetResponse = await env.ASSETS.fetch(new Request(assetUrl.toString(), request));
 
     if (!assetResponse.ok) {
       return assetResponse;
@@ -176,7 +161,6 @@ export default {
 
     return new HTMLRewriter()
       .on('html', new SetAttribute('lang', locale))
-      .on('head', new PrependLocaleBootstrap(locale, explicitLocale))
       .on('head', new AppendLocalizedHead(locale, data, canonical))
       .on('title', new SetText(data.title))
       .on('meta[name="description"]', new SetAttribute('content', data.description))
@@ -184,8 +168,8 @@ export default {
       .on('meta[property="og:url"]', new SetAttribute('content', canonical))
       .on('meta[property="og:title"]', new SetAttribute('content', data.title))
       .on('meta[property="og:description"]', new SetAttribute('content', data.description))
-      .on('#grH1', new SetText(data.h1))
-      .on('#grLead', new SetText(data.lead))
+      .on('main h1', new SetText(data.h1))
+      .on('main .lead', new SetText(data.lead))
       .transform(htmlResponse);
   }
 };
