@@ -8,6 +8,10 @@ on:
       - marketing/international-seo-2026-07
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pull-requests: write
+
 concurrency:
   group: cloudflare-pages-gorolli-web-${{ github.ref_name }}
   cancel-in-progress: true
@@ -29,8 +33,19 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy . --project-name=gorolli-web --branch=${{ github.ref_name }}
 
-      - name: Publish preview URL
+      - name: Publish deployment URL
         if: always()
+        env:
+          DEPLOYMENT_URL: ${{ steps.cloudflare.outputs.deployment-url }}
+          ALIAS_URL: ${{ steps.cloudflare.outputs.pages-deployment-alias-url }}
+          GH_TOKEN: ${{ github.token }}
         run: |
+          URL="$ALIAS_URL"
+          if [ -z "$URL" ]; then URL="$DEPLOYMENT_URL"; fi
           echo "## Cloudflare Pages deployment" >> "$GITHUB_STEP_SUMMARY"
-          echo "${{ steps.cloudflare.outputs['deployment-url'] }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "$URL" >> "$GITHUB_STEP_SUMMARY"
+
+          PR_NUMBER=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$GITHUB_REF_NAME" --state open --json number --jq '.[0].number // empty')
+          if [ -n "$PR_NUMBER" ] && [ -n "$URL" ]; then
+            gh pr comment "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --body "Cloudflare preview: $URL"
+          fi
