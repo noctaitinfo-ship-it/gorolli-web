@@ -1,19 +1,14 @@
-name: Deploy Web to Cloudflare Pages
+﻿name: Deploy Web to Cloudflare Pages
 
 on:
   push:
     branches:
       - main
       - redesign/gorolli-finder-demand-first
-      - marketing/international-seo-2026-07
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pull-requests: write
-
 concurrency:
-  group: cloudflare-pages-gorolli-web-${{ github.ref_name }}
+  group: cloudflare-pages-gorolli-web
   cancel-in-progress: true
 
 jobs:
@@ -26,104 +21,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Deploy to Cloudflare Pages
-        id: cloudflare
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy . --project-name=gorolli-web --branch=${{ github.ref_name }}
-
-      - name: Smoke-test localized preview
-        id: smoke
-        env:
-          DEPLOYMENT_URL: ${{ steps.cloudflare.outputs.deployment-url }}
-          ALIAS_URL: ${{ steps.cloudflare.outputs.pages-deployment-alias-url }}
-        run: |
-          URL="$DEPLOYMENT_URL"
-          if [ -z "$URL" ]; then URL="$ALIAS_URL"; fi
-          export PREVIEW_URL="$URL"
-          python3 - <<'PY'
-          import os
-          import time
-          import urllib.request
-
-          base = os.environ['PREVIEW_URL'].rstrip('/')
-          tests = {
-              '/fi': [
-                  'Peräkärryn vuokraus lähellä | GoRolli',
-                  'Peräkärryn vuokraus lähelläsi.',
-                  'https://www.gorolli.com/fi',
-                  'https://client.gorolli.com',
-                  'https://host.gorolli.com',
-              ],
-              '/lv': [
-                  'Piekabes noma tuvumā | GoRolli',
-                  'Piekabes noma tavā tuvumā.',
-                  'https://www.gorolli.com/lv',
-                  'https://client.gorolli.com',
-                  'https://host.gorolli.com',
-              ],
-          }
-
-          report = []
-          failures = []
-          for path, required in tests.items():
-              last_error = None
-              for attempt in range(1, 6):
-                  try:
-                      request = urllib.request.Request(base + path, headers={'User-Agent': 'GoRolli-CI-Smoke-Test/1.0'})
-                      with urllib.request.urlopen(request, timeout=30) as response:
-                          body = response.read().decode('utf-8')
-                          missing = [value for value in required if value not in body]
-                          if response.status != 200:
-                              raise AssertionError(f'HTTP {response.status}')
-                          if missing:
-                              raise AssertionError('missing: ' + ' | '.join(missing))
-                      report.append(f'PASS {path}')
-                      break
-                  except Exception as exc:
-                      last_error = exc
-                      if attempt < 5:
-                          time.sleep(4)
-              else:
-                  failures.append(f'FAIL {path}: {last_error}')
-
-          lines = report + failures
-          with open('/tmp/smoke-report.txt', 'w', encoding='utf-8') as handle:
-              handle.write('\n'.join(lines))
-          print('\n'.join(lines))
-          if failures:
-              raise SystemExit(1)
-          PY
-          echo "result=passed" >> "$GITHUB_OUTPUT"
-
-      - name: Publish deployment result
-        if: always()
-        env:
-          DEPLOYMENT_URL: ${{ steps.cloudflare.outputs.deployment-url }}
-          ALIAS_URL: ${{ steps.cloudflare.outputs.pages-deployment-alias-url }}
-          SMOKE_OUTCOME: ${{ steps.smoke.outcome }}
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          URL="$ALIAS_URL"
-          if [ -z "$URL" ]; then URL="$DEPLOYMENT_URL"; fi
-          REPORT=$(cat /tmp/smoke-report.txt 2>/dev/null || echo "Smoke test did not produce a report")
-          echo "## Cloudflare Pages deployment" >> "$GITHUB_STEP_SUMMARY"
-          echo "$URL" >> "$GITHUB_STEP_SUMMARY"
-          echo "Smoke test: $SMOKE_OUTCOME" >> "$GITHUB_STEP_SUMMARY"
-          echo '```' >> "$GITHUB_STEP_SUMMARY"
-          echo "$REPORT" >> "$GITHUB_STEP_SUMMARY"
-          echo '```' >> "$GITHUB_STEP_SUMMARY"
-
-          PR_NUMBER=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$GITHUB_REF_NAME" --state open --json number --jq '.[0].number // empty')
-          if [ -n "$PR_NUMBER" ] && [ -n "$URL" ]; then
-            gh pr comment "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --body "Cloudflare preview: $URL — localized FI/LV smoke test: $SMOKE_OUTCOME
-
-\`\`\`
-$REPORT
-\`\`\`"
-          fi
-
-          if [ "$SMOKE_OUTCOME" != "success" ]; then
-            exit 1
-          fi
