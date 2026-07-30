@@ -33,4 +33,4 @@ jobs:
         if: always()
         run: |
           echo "## Cloudflare Pages deployment" >> "$GITHUB_STEP_SUMMARY"
-          echo "${{ steps.cloudflare.outputs.deployment-url }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "${{ steps.cloudflare.outputs['deployment-url'] }}" >> "$GITHUB_STEP_SUMMARY"
