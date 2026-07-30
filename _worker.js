@@ -150,7 +150,7 @@ export default {
     const assetRequest = new Request(indexUrl.toString(), request);
     const assetResponse = await env.ASSETS.fetch(assetRequest);
 
-    if (!assetResponse.ok || request.method === 'HEAD') {
+    if (!assetResponse.ok) {
       return assetResponse;
     }
 
@@ -158,6 +158,14 @@ export default {
     headers.set('Content-Language', locale);
     headers.set('X-Robots-Tag', 'index, follow');
     headers.delete('Content-Length');
+
+    if (request.method === 'HEAD') {
+      return new Response(null, {
+        status: assetResponse.status,
+        statusText: assetResponse.statusText,
+        headers
+      });
+    }
 
     const htmlResponse = new Response(assetResponse.body, {
       status: assetResponse.status,
