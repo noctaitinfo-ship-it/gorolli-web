@@ -146,8 +146,9 @@ export default {
     const data = LOCALES[locale];
     const canonical = canonicalFor(locale, url.pathname);
     const explicitLocale = url.pathname !== '/';
-    const indexUrl = new URL('/index.html', url);
-    const assetRequest = new Request(indexUrl.toString(), request);
+    const assetPath = explicitLocale ? `/${locale}.html` : '/index.html';
+    const assetUrl = new URL(assetPath, url);
+    const assetRequest = new Request(assetUrl.toString(), request);
     const assetResponse = await env.ASSETS.fetch(assetRequest);
 
     if (!assetResponse.ok) {
