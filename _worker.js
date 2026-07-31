@@ -132,7 +132,11 @@ export default {
     const data = LOCALES[locale];
     const canonical = canonicalFor(locale, url.pathname);
     const explicitLocale = url.pathname !== '/';
-    const assetPath = explicitLocale ? `/${locale}.html` : '/index.html';
+
+    // Cloudflare Pages ASSETS must be requested by the public "pretty" path.
+    // Requesting /index.html or /fi.html makes the asset layer redirect back to
+    // / or /fi, which sends the browser into an endless self-redirect loop.
+    const assetPath = explicitLocale ? `/${locale}` : '/';
     const assetUrl = new URL(assetPath, url);
     const assetResponse = await env.ASSETS.fetch(new Request(assetUrl.toString(), request));
 
